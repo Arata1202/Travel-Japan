@@ -1,0 +1,18 @@
+{
+    "name"              : "Travel Japan !",
+    "short_name"        : "Travel JPN !",
+    "description"       : "Japan Travel !アプリ",
+    "start_url"         : "/?pwa=1",
+    "display"           : "standalone",
+    "background_color"  : "#ff0000",
+    "theme_color"       : "#ff0000",
+    "icons": [{
+        "src"           : "/IMG_3703.jpeg",
+        "sizes"         : "192x192",
+        "type"          : "image/jpeg"
+      }, {
+        "src"           : "/IMG_3703.jpeg",
+        "sizes"         : "256x256",
+        "type"          : "image/jpeg"
+    }]
+  }

@@ -1,0 +1,120 @@
+@charset "utf-8";
+
+/* ヘッダー周り */
+header{
+    position:fixed;
+    display:flex;
+    height:45px;
+}
+.title{
+    position:fixed;
+    top: 0;
+    left: 0;
+    margin-top:0px;
+    background-color:skyblue;
+    color:white;
+    width:100%;
+}
+.title a{
+    color:white;
+    text-decoration:none;
+}
+
+/* 小見出し */
+/* 小見出し */
+.subtitle{
+    text-align:center;
+    padding-top:80px;
+    margin-bottom:10px;
+}
+
+/* 写真表示部分 */
+.box{
+    text-align:center;
+    font-size:16px;
+    margin-top:40px;
+}
+.name{
+    text-align:left;
+    margin-top:0px;
+    margin-bottom:10px;
+}
+.spot{
+    display:flex;
+}
+.prefecture{
+    display:flex;
+    margin-left:auto;
+}
+.prefecture p{
+    margin-top:0px;
+    margin-bottom:10px;
+}
+.contents{
+    text-align:left;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.message{
+    text-align:left;
+}
+.many{
+    text-align:left;
+    margin-top:3px;
+}
+.submit{
+    width:85px;
+    height:30px;
+    font-size:15px;
+    border-radius:5%;
+    background-color:lightpink;
+    color:white;
+    border:none;
+}
+.end{
+    margin-bottom:80px;
+}
+section{
+    margin-bottom:80px;
+}
+.iine{
+    display:flex;
+    margin-bottom:20px;
+}
+.like_many{
+    margin-left:auto;
+}
+
+/* ボトムメニュー */
+.under_menu{
+    display:flex;
+    position:fixed;
+    left:0;
+    bottom:0;
+    padding-left:0;
+    width:100%;
+    background:skyblue;
+    margin-bottom:0;
+    height:45px;
+    list-style:none;
+}
+.under_menu li{
+    table-layout:fixed;
+    width:100%;
+    padding:5px;
+    text-align:center;
+    color:white;
+    font-size:20px;
+}
+.under_menu li a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+@media screen and (min-width: 767px) {
+    .box{
+        width:50%;
+        margin:auto;
+        margin-bottom:80px;
+    }
+}
