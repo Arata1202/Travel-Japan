@@ -49,7 +49,6 @@ $stmt->execute();
                         <li><h5><a href="about.php">＊Travel Japan ! とは</a></h5></li>
                         <li><h5><a href="mypage.php">＊マイページ</a></h5></li>
                         <li><h5><a href="ranking.php">＊ランキング</a></h5></li>
-                        <li><h5><a href="favorite.php">＊お気に入り</a></h5></li>
                         <li><h5><a href="privacy.php">＊プライバシーポリシー</a></h5></li>
                         <li><h5><a href="contactform.php">＊お問い合わせ</a></h5></li>
                     </ul>

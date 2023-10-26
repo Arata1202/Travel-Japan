@@ -43,22 +43,18 @@ header{
 .flex_box{
     text-align:center;
 }
-.submit{
-    width:90px;
+button{
     height:30px;
     font-size:15px;
     border-radius:5%;
     background-color:skyblue;
     color:white;
     border:none;
+    margin: auto;
 }
-.btn{
-    width:130px;
-    height:30px;
-    font-size:15px;
-    border-radius:5%;
-    color:black;
-    border:none;
+.urls{
+    width:150px;
+    margin: auto;
 }
 
 /* ボトムメニュー */

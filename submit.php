@@ -16,7 +16,7 @@ $_SESSION['csrf_token'] = $csrf_token;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>submit</title>
-    <link rel="stylesheet" href="CSS/complete.css">
+    <link rel="stylesheet" href="CSS/submit.css">
 </head>
 <body>
     <header>
@@ -31,13 +31,13 @@ $_SESSION['csrf_token'] = $csrf_token;
         <form action="answer.php" method="post">
             <div class="flex_box">    
                 <div class="require">
-                    <h3>氏名</h3><p class="red">(*必須)</p>
+                    <h3>氏名</h3><p class="black">(*任意)</p>
                 </div>
-                <input type="text" name="name" value="" required size="30" placeholder="東洋　太郎" style="height:25px;">
+                <input type="text" name="name" value="" size="30" placeholder="東洋　太郎" style="height:25px;">
                 <div class="require">
-                    <h3>メールアドレス</h3><p class="red">(*必須)</p>
+                    <h3>メールアドレス</h3><p class="black">(*任意)</p>
                 </div>
-                <input type="email" name="address" value="" required size="30" placeholder="example@example.jp" size="50" style="height:25px;">
+                <input type="email" name="address" value="" size="30" placeholder="example@example.jp" size="50" style="height:25px;">
                 <div class="require">
                     <h3>会員ID</h3><p class="red">(*必須)</p>
                 </div>

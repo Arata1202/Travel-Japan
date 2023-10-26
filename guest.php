@@ -21,6 +21,9 @@ $regist->execute();
     <link rel="stylesheet" href="CSS/guest.css">
 </head>
 <body>
+    <div class="loader-bg">
+        <div class="loader"></div>
+    </div>
     
     <header>
         <!--タイトル-->
@@ -60,5 +63,21 @@ $regist->execute();
             <li><a href="gcontactform.php">お問い合わせ</a></li>           
         </ul>
     </footer>
+
+    <!--     jQuery     -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            $(window).on('load',function(){
+                $('.loader').delay(500).fadeOut(500);
+                $('.loader-bg').delay(800).fadeOut(700);
+            });
+            setTimeout(function(){
+                $('.loader-bg').fadeOut(500);
+            },5000);
+        });
+    </script>
 </body>
 </html>

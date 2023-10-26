@@ -32,6 +32,10 @@ $regist->execute();
     <script src="JS/index.js" async></script>
 </head>
 <body>
+    <div class="loader-bg">
+        <div class="loader"></div>
+    </div>
+
     <header>
         <!--ハンバーガーメニュー-->
         <div class="humberger">
@@ -48,7 +52,6 @@ $regist->execute();
                         <li><h5><a href="about.php">＊Travel Japan ! とは</a></h5></li>
                         <li><h5><a href="mypage.php">＊マイページ</a></h5></li>
                         <li><h5><a href="ranking.php">＊ランキング</a></h5></li>
-                        <li><h5><a href="favorite.php">＊お気に入り</a></h5></li>
                         <li><h5><a href="privacy.php">＊プライバシーポリシー</a></h5></li>
                         <li><h5><a href="contactform.php">＊お問い合わせ</a></h5></li>
                     </ul>
@@ -125,6 +128,22 @@ $regist->execute();
             <li><a href="search.php">検索</a></li>
         </ul>
     </footer>
+
+    <!--     jQuery     -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            $(window).on('load',function(){
+                $('.loader').delay(500).fadeOut(500);
+                $('.loader-bg').delay(800).fadeOut(700);
+            });
+            setTimeout(function(){
+                $('.loader-bg').fadeOut(500);
+            },5000);
+        });
+    </script>
 </body>
 </html>
 
