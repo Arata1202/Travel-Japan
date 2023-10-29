@@ -11,17 +11,22 @@ if (!isset ($_SESSION['user'] )){
     header('Location:home.php');
 }
 
-//     セッション投稿データ
-if(isset($_SESSION['name'])){
-    $user_in = $_SESSION['user'];
-    $id = $_SESSION['id'];
-    $name = $_SESSION['name'];
-    $filename = $_SESSION['filename'];
+
+//エスケープ処理
+function h($str){
+    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
+//変数定義
+$id=h($_POST["id"]);
+$name=h($_POST["name"]);
+$filename=h($_POST["filename"]);
+$csrf_token=h($_POST["csrf_token"]);
+$name = $_SESSION['user'];
+
     
 //SQL接続　自分のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$user_in' order by created_at DESC limit 50");
+$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$name' order by created_at DESC limit 50");
 $stmt->execute();
 
 //SQL接続　全体のコメント
@@ -38,6 +43,20 @@ $regist->execute();
     <title>comment</title>
     <link rel="stylesheet" href="CSS/recentcomment.css">
     <script src="JS/recentcomment.js" async></script>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -98,14 +117,15 @@ $regist->execute();
 
                         <!--削除フォーム-->
                         <form action="recentdelete.php" method="post">
-                            <input class="ok" name="ok" type="submit" value="削除">
-                        </form>
-                        <?php
-                        if(isset($_POST['ok'])){
-                            $_SESSION['comment'] = "$comment";
+                            <!--トークンの送信-->
+                            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
 
-                        }
-                        ?>
+                            <input type="hidden" name="id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="name" value="<?php echo $name; ?>">
+                            <input type="hidden" name="comment" value="<?php echo $comment; ?>">
+                            <input type="hidden" name="filename" value="<?php echo $filename; ?>">
+                            <input class="ok" type="submit" value="削除">
+                        </form>
                     </td>
                 </tr>
                 <tr>

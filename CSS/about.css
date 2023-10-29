@@ -1,11 +1,9 @@
 @charset "utf-8";
-
 a{
-    color:royalblue;
-    text-decoration:none;
+    color: royalblue;
+    text-decoration: none;
 }
-
-/* ヘッダー周り */
+ /* ヘッダー周り */
 header{
     position:fixed;
     display:flex;
@@ -25,16 +23,16 @@ header{
     text-decoration:none;
 }
 .subtitle{
-    text-align:center;
-    margin-top:80px;
-    margin-bottom:0px;
+    text-align: center;
 }
 img{
-    width:100%;
+    width: 100%;
 }
 .box{
-    width: 50%;
-    margin:auto;
+    width: 90%;
+    margin: auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
 
 /* ボトムメニュー */
@@ -49,6 +47,7 @@ img{
     margin-bottom:0;
     height:45px;
     list-style:none;
+    padding-bottom: 30px;
 }
 .under_menu li{
     table-layout:fixed;
@@ -138,4 +137,25 @@ h5{
 .list ul h5 a{
     color:black;
     text-decoration:none;
+}
+@media screen and (min-width: 767px){
+    .box{
+        width: 50%;
+        margin: auto;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+    .under_menu{
+        display:flex;
+        position:fixed;
+        left:0;
+        bottom:0;
+        padding-left:0;
+        width:100%;
+        background:skyblue;
+        margin-bottom:0;
+        height:45px;
+        list-style:none;
+        padding-bottom: 0px;
+    }
 }

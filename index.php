@@ -26,16 +26,26 @@ $regist->execute();
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Travel Japan !</title>
     <link rel="stylesheet" href="CSS/index.css">
     <script src="JS/index.js" async></script>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
-    <div class="loader-bg">
-        <div class="loader"></div>
-    </div>
-
     <header>
         <!--ハンバーガーメニュー-->
         <div class="humberger">
@@ -84,37 +94,26 @@ $regist->execute();
 
                         <!--いいね機能　フォーム-->
                         <form action="love.php" method="POST" name="like_btn">
+                            <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                             <input class="submit" type="submit" value="いいね！">
                         </form>
-                        <!--     セッションに保存     -->
-                        <?php
-                        if(isset($_POST['submit'])){
-                            $_SESSION['id'] = "$id";
-
-                        }
-                        ?>
                     </div>
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
              <div class="contents">&nbsp;<?php echo $loop['tag']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              
-             <!--コメントするボタン-->
+             <!--コメントボタン-->
              <div class="urls">
                 <form action="recentcomment.php" method="POST">
-                    <input class="btn_s" type="submit" name="btn_s" value="コメント欄">
-
-
+                    
+                    <!--トークンの送信-->
+                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
+                    <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
+                    <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                    <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
+                    <input class="btn_s" type="submit" value="コメント欄">
                 </form>
-                <!--     セッションに保存     -->
-                    <?php
-                    if(isset($_POST['btn_s'])){
-                        $_SESSION['id'] = "$id";
-                        $_SESSION['name'] = "$name";
-                        $_SESSION['filename'] = "$filename";
-
-                    }
-                    ?>
              </div>
              <hr>
 		<?php endforeach;?>

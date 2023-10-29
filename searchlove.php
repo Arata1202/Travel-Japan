@@ -20,6 +20,20 @@ if (!isset ($_SESSION['user'] )){
     <title>search</title>
     <link rel="stylesheet" href="CSS/searchlove.css">
     <script src="JS/searchlove.js" async></script>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
     <header>

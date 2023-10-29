@@ -19,12 +19,22 @@ $regist->execute();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>guest</title>
     <link rel="stylesheet" href="CSS/guest.css">
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
-    <div class="loader-bg">
-        <div class="loader"></div>
-    </div>
-    
     <header>
         <!--タイトル-->
         <h1 class="title"><a href="">&nbsp;Travel Japan !</a></h1>

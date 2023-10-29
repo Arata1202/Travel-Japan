@@ -11,6 +11,18 @@ if (!isset ($_SESSION['user'] )){
     header('Location:home.php');
 }
 
+//エスケープ処理
+function h($str){
+    return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+}
+//変数定義
+$id = h($_POST["id"]);
+$name = $_SESSION['user'];
+$comment = h($_POST['comment']);
+$filename = h($_POST['filename']);
+$csrf_token=h($_POST["csrf_token"]);
+
+
 //MySQL接続 DELETE
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $regist = $pdo->prepare("DELETE FROM comment WHERE id = '$id' && name = '$name' && comment = '$comment'");
@@ -25,6 +37,20 @@ $regist->execute();
     <title>comment</title>
     <link rel="stylesheet" href="CSS/recentdelete.css">
     <script src="JS/recentdelete.js" async></script>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
     <header>

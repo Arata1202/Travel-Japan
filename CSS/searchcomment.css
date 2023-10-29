@@ -92,6 +92,7 @@ table{
     margin-bottom:0;
     height:45px;
     list-style:none;
+    padding-bottom: 30px;
 }
 .under_menu li{
     table-layout:fixed;
@@ -198,4 +199,18 @@ h5{
     .third{
         width:10%;
     }
+    .under_menu{
+        display:flex;
+        position:fixed;
+        left:0;
+        bottom:0;
+        padding-left:0;
+        width:100%;
+        background:skyblue;
+        margin-bottom:0;
+        height:45px;
+        list-style:none;
+        padding-bottom: 0px;
+    }
+    
 }
