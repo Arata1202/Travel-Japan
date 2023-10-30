@@ -35,7 +35,7 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>comment</title>
     <link rel="stylesheet" href="CSS/commentok.css">
     <script src="JS/commentok.js" async></script>

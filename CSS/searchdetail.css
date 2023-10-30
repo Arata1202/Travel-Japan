@@ -121,7 +121,7 @@ button{
     margin-bottom:0;
     height:45px;
     list-style:none;
-    padding-bottom: 30px;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 .under_menu li{
     table-layout:fixed;

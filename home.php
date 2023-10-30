@@ -2,8 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Thank you</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script>
+        window.addEventListener('load', function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register("/sw.js")
+                    .then(function (registration) {
+                        console.log("serviceWorker registed.");
+                    }).catch(function (error) {
+                        console.warn("serviceWorker error.", error);
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -13,7 +27,10 @@
 
     <div class="box">
         <h2 class="subtitle">Travel Japan !</h2>
-        <h3>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-" target="_blank">Arata1202</a></h3>
+        <p>Travel Japan ! はこちら : <a href="https://traveljapan.aratasportfolio.com/form.php" target="_blank">ログイン</a></p>
+        <p>会員ID guest , パスワード guest でログインすることも可能です。</p>
+        <br>
+        <p>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-" target="_blank">Arata1202</a></p>
         <hr>
         
         <h2 class="subtitle">開発のきっかけ</h2>
@@ -133,7 +150,7 @@ header{
     background-color:skyblue;
     color:white;
     width:100%;
-    padding: 10px 0 10px 1%
+    padding: 5px 0 5px 1%
     
 }
 .title a{
@@ -142,26 +159,10 @@ header{
     padding-left:1%;
 }
 .subtitle{
-    text-align: center;
-    font-size: 35px;
     margin-bottom: 50px;
     margin-top: 30px;
-    color: deepskyblue;
     position: relative;
 }
-.subtitle:after {
-    position: absolute;
-    top: 50px;
-    bottom: 0;
-    left: 32.8%;
-    width: 35%;
-    height: 6px;
-    content: '';
-    border-radius: 3px;
-    background-image: -webkit-gradient(linear, right top, left top, from(#2af598), to(#009efd));
-    background-image: -webkit-linear-gradient(right, #2af598 0%, #009efd 100%);
-    background-image: linear-gradient(to left, #2af598 0%, #009efd 100%);
-  }
     img{
     width: 100%;
 }
@@ -193,25 +194,10 @@ h3{
         margin-top:80px;
     }
     .subtitle{
-            text-align: center;
             font-size: 30px;
             margin-bottom: 30px;
             margin-top: 20px;
-            color: deepskyblue;
             position: relative;
-        }
-    .subtitle:after {
-        position: absolute;
-        top: 50px;
-        bottom: 0;
-        left: 10%;
-        width: 81.5%;
-        height: 6px;
-        content: '';
-        border-radius: 3px;
-        background-image: -webkit-gradient(linear, right top, left top, from(#2af598), to(#009efd));
-        background-image: -webkit-linear-gradient(right, #2af598 0%, #009efd 100%);
-        background-image: linear-gradient(to left, #2af598 0%, #009efd 100%);
         }
     h3{
         font-size: 20px;

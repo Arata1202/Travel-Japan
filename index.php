@@ -142,6 +142,7 @@ $regist->execute();
                 $('.loader-bg').fadeOut(500);
             },5000);
         });
+
     </script>
 </body>
 </html>

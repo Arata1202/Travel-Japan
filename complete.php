@@ -11,11 +11,12 @@ session_regenerate_id();
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>submit</title>
     <link rel="stylesheet" href="CSS/complete.css">
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script src="JS/complete.js" async></script>
     <script>
         window.addEventListener('load', function () {
             if ('serviceWorker' in navigator) {

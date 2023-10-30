@@ -6,3 +6,4 @@ btn.addEventListener('click', () => {
     block.classList.toggle('active');
 });
 
+const safeArea = parseInt(getComputedStyle(document.footer).getPropertyValue("padding-bottom"));

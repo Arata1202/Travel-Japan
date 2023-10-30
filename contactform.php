@@ -19,7 +19,7 @@ $_SESSION['csrf_token'] = $csrf_token;
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>contact</title>
     <link rel="stylesheet" href="CSS/contactform.css">
     <script src="JS/contactform.js" async></script>

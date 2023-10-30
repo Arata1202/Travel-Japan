@@ -14,11 +14,12 @@ $_SESSION['csrf_token'] = $csrf_token;
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>contact</title>
     <link rel="stylesheet" href="CSS/gcontactform.css">
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <script src="JS/gcontactform.js" async></script>
     <script>
         window.addEventListener('load', function () {
             if ('serviceWorker' in navigator) {

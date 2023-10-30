@@ -25,7 +25,7 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>ranking</title>
     <link rel="stylesheet" href="CSS/ranking.css">
     <script src="JS/ranking.js" async></script>

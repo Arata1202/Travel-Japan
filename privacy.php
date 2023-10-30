@@ -17,7 +17,7 @@ if (!isset ($_SESSION['user'] )){
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>privacy-policy</title>
     <link rel="stylesheet" href="CSS/privacy.css">
     <script src="JS/privacy.js" async></script>
