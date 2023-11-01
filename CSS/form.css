@@ -67,6 +67,12 @@ button{
 p{
     margin-top:5px;
 }
+form{
+    text-align: center;
+}
+input{
+    font-size: 16px;
+}
 
 /* ボトムメニュー */
 .under_menu{

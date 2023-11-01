@@ -112,7 +112,6 @@ $_SESSION['csrf_token'] = $csrf_token;
                     </div>
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <p class="contents">&nbsp;<?php echo $loop['tag']?></div>
              <p class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              <div class="urls">
                  <div class="urls">

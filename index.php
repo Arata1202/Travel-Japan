@@ -79,7 +79,16 @@ $regist->execute();
     <section class="box">
 		<?php foreach($regist as $loop):?>
             <div class="spot">
-                 <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
+                 <p class="name" id="n<?php echo $loop['id']; ?>">
+                    <b>&nbsp;<?php echo $loop['name']?>&nbsp;</b>
+
+                    <!--　フォローページ　-->
+                    <form action="yourpage.php" method="POST">
+                        <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                        <input type="submit" value="">
+                    </form>
+                </p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>
@@ -100,7 +109,6 @@ $regist->execute();
                     </div>
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <div class="contents">&nbsp;<?php echo $loop['tag']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              
              <!--コメントボタン-->

@@ -73,7 +73,6 @@ if (!isset ($_SESSION['user'] )){
         $prefecture = h($_POST["prefecture"]);
         $place = h($_POST["place"]);
         $contents = h($_POST["contents"]);
-        $tag = h($_POST["tag"]);
         $num=h($_POST["num"]);
 
         //MySQL接続 UPDATE
@@ -82,7 +81,6 @@ if (!isset ($_SESSION['user'] )){
         $regist->bindParam(":prefecture", $prefecture);
         $regist->bindParam(":place", $place);
         $regist->bindParam(":contents", $contents);
-        $regist->bindParam(":tag", $tag);
         $regist->execute();
     }else{
         header('Location:form.php');

@@ -39,13 +39,13 @@ if (isset($_POST["search"])) {
     }
 
     //MySQL　セレクト文
-    $sql="SELECT * FROM japantravel WHERE prefecture like '%{$prefecture}%' and place like '%{$place}%' and name like'%{$name}%'";
+    $sql="SELECT * FROM japantravel WHERE prefecture like '%{$prefecture}%' and place like '%{$place}%' and name like'%{$name}%' order by created_at DESC limit 9999";
     $rec = $dbh->prepare($sql);
     $rec->execute();
     $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
 }else{
 
-    $sql='SELECT * FROM japantravel WHERE 1';
+    $sql='SELECT * FROM japantravel WHERE 1 order by created_at DESC limit 50';
     $rec = $dbh->prepare($sql);
     $rec->execute();
     $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
@@ -167,7 +167,6 @@ if (isset($_POST["search"])) {
                     </div>
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <div class="contents">&nbsp;<?php echo $loop['tag']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              
              <!--コメントボタン-->

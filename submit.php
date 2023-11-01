@@ -52,11 +52,11 @@ $_SESSION['csrf_token'] = $csrf_token;
                 <div class="require">
                     <h3>メールアドレス</h3><p class="black">(*任意)</p>
                 </div>
-                <input type="email" name="address" value="" size="30" placeholder="example@example.jp" size="50" style="height:25px;">
+                <input type="email" name="address" value="" size="30" placeholder="example@example.jp" size="30" style="height:25px;">
                 <div class="require">
                     <h3>会員ID</h3><p class="red">(*必須)</p>
                 </div>
-                <input type="text" name="id" value="" required size="30" placeholder="example1234" size="50" style="height:25px;">
+                <input type="text" name="id" value="" required size="30" placeholder="example1234" size="30" style="height:25px;">
                 <div class="require">
                     <h3>パスワード</h3><p class="red">(*必須)</p>
                 </div>
@@ -64,7 +64,8 @@ $_SESSION['csrf_token'] = $csrf_token;
                 <div class="require">
                     <h3>電話番号</h3><p class="black">(*任意)</p>
                 </div>
-                <input type="tel" name="tel" value="" size="30" placeholder="0120999888" size="50" style="height:25px;">
+                <input type="tel" name="tel" value="" size="30" placeholder="0120999888" size="30" style="height:25px;">
+                <br>
                 <p><input class="submit" type="submit" name="submit" value="確認画面へ"></p>
 
                 <!--トークンの送信-->

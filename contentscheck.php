@@ -101,9 +101,6 @@ if (!isset ($_SESSION['user'] )){
             <p><?php echo $contents ?><p>
             <input type="hidden" name="contents" value="<?php echo $contents ?>">
             
-            <h3>タグ</h3>
-            <p><?php echo $tag ?><p>
-            <input type="hidden" name="tag" value="<?php echo $tag ?>">
             <input type="hidden" name="num" value="<?php echo $num ?>">
         </div>
 

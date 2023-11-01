@@ -139,10 +139,17 @@ $regist->execute();
                 </table>
             <?php endforeach ?>  
             <hr>
+            <?php
+            if (!isset ($comment )){
+                echo "<p>コメントはまだありません</p>";
+                echo "<hr>";
+            }
+            ?>
     
             <!--みんなの投稿　表示-->
             <h3>みんなのコメント</h3>       
             <?php foreach ($regist as $loop): ?>
+                <?php $comment_s = $loop['comment']; ?>
                 <table class="last">
                     <tr>
                         <td class="first"><?php echo $loop['name']; ?></td>
@@ -156,6 +163,12 @@ $regist->execute();
                 </table>
             <?php endforeach ?>
             <hr>
+            <?php
+            if (!isset ($comment_s)){
+                echo "<p>コメントはまだありません</p>";
+                echo "<hr>";
+            }
+            ?>
     
             <!--ボタン-->
             <div class="urls">

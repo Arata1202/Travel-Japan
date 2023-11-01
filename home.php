@@ -32,6 +32,14 @@
         <br>
         <p>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-" target="_blank">Arata1202</a></p>
         <hr>
+
+        <h2 class="subtitle">アップデート</h2>
+        <ul>
+            <li>PWAに対応しました。 10/30</li>
+            <li>投稿のタグ欄を削除しました。 10/31</li>
+            <p>これらにより、UIの向上やページ読み込みが少し高速化しました。</p>
+        </ul>
+        <hr>
         
         <h2 class="subtitle">開発のきっかけ</h2>
         <p>私は旅行をすることが好きなので、普段旅行先を考えたりする際にはInstagramを活用します。</p>

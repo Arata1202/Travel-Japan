@@ -26,61 +26,20 @@ header{
 }
 
 /* メイン */
-.box{
-    margin-bottom:80px;
-}
-h3{
-    text-align:center;
-}
-form{
-    text-align:center;
-}
-table{
-    width:100%;
-}
-.submit{
-    width:70px;
+.btn_s{
+    width:83px;
     height:30px;
     font-size:15px;
     border-radius:5%;
-    color:white;
     background-color:skyblue;
-    border:none;
-}
-.btn-s{
-    width:75px;
-    height:30px;
-    font-size:15px;
-    border-radius:5%;
-    background-color:lightgray;
-    color:black;
-    margin-bottom:80px;
-    margin-top:20px;
-    border:none;
-}
-.ok{
-    width:70px;
-    height:30px;
-    font-size:15px;
-    border-radius:5%;
-    background-color:lightpink;
     color:white;
     border:none;
 }
 .urls{
     text-align:center;
 }
-.first{
-    width:30%;
-}
-.second{
-    width:45%;
-}
-.third{
-    width:10%;
-}
-input{
-    font-size: 16px;
+p{
+    text-align:center;
 }
 
 /* ボトムメニュー */
@@ -186,22 +145,7 @@ h5{
     color:black;
     text-decoration:none;
 }
-
 @media screen and (min-width: 767px){
-    .box{
-        width:30%;
-        margin:auto;
-        margin-bottom:80px;
-    }
-    .first{
-        width:20%;
-    }
-    .second{
-        width:70%;
-    }
-    .third{
-        width:10%;
-    }
     .under_menu{
         display:flex;
         position:fixed;
@@ -215,5 +159,4 @@ h5{
         list-style:none;
         padding-bottom: 0px;
     }
-    
 }

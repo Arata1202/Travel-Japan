@@ -64,7 +64,6 @@ $stmt->execute();
                         <br>
                         <li><h5><a href="about.php">＊Travel Japan ! とは</a></h5></li>
                         <li><h5><a href="mypage.php">＊マイページ</a></h5></li>
-                        <li><h5><a href="favorite.php">＊お気に入り</a></h5></li>
                         <li><h5><a href="privacy.php">＊プライバシーポリシー</a></h5></li>
                         <li><h5><a href="contactform.php">＊お問い合わせ</a></h5></li>
                         
@@ -87,15 +86,15 @@ $stmt->execute();
         <?php foreach($stmt as $loop):?>
             
             <h3>氏名</h3>
-            <p><input type="text" name="name" value="<?php echo $loop['name']?>" required size="30" style="height:25px;"></p>
+            <input type="text" name="name" value="<?php echo $loop['name']?>" size="30" style="height:25px;">
             <h3>メールアドレス</h3>
-            <p><input type="text" name="address" value="<?php echo $loop['address']?>" required size="30" style="height:25px;"></p>
+            <input type="text" name="address" value="<?php echo $loop['address']?>" size="30" style="height:25px;">
             <h3>会員ID (変更不可)</h3>
-            <p><?php echo $loop['id']?><input type="hidden" name="id" value="<?php echo $loop['id']?>"></p>
+            <?php echo $loop['id']?><input type="hidden" name="id" value="<?php echo $loop['id']?>">
             <h3>パスワード</h3>
-            <p><input type="text" name="password" value="" required size="30" style="height:25px;"></p>
+            <input type="text" name="password" value="" required size="30" style="height:25px;">
             <h3>電話番号</h3>
-            <p><input type="int" name="tel" value="<?php echo $loop['tel']?>" required size="30" style="height:25px;"></p>
+            <input type="int" name="tel" value="<?php echo $loop['tel']?>" size="30" style="height:25px;">
             <div class="urls">
                 <button class="btn_s" type="button" onclick="history.back(-1)">戻る</button>
                 <input class="submit" type="submit" value="確認画面">

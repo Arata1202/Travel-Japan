@@ -80,6 +80,10 @@ table{
     width:10%;
 }
 
+input{
+    font-size: 16px;
+}
+
 /* ボトムメニュー */
 .under_menu{
     display:flex;

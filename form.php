@@ -50,11 +50,12 @@ $_SESSION['csrf_token'] = $csrf_token;
             <div class="flex_box">
                 <h3>会員ID</h3><p class="red">(*必須)</p>
             </div>
-            <p><input type="text" name="user" required size="30" placeholder="xyz123" style="height:25px;"></p>
+            <input type="text" name="user" required size="30" placeholder="xyz123" style="height:25px;">
             <div class="flex_box">
                 <h3>パスワード</h3><p class="red">(*必須)</p>
             </div>
-            <p><input type="password" name="password" required size="30" placeholder="Abc456" style="height:25px;"></p>
+            <input type="password" name="password" required size="30" placeholder="Abc456" style="height:25px;">
+            <br>
             <br><p><input class="submit" type="submit" value="ログイン"></p>
         </form>    
     </div>

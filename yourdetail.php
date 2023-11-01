@@ -1,7 +1,7 @@
 <?php
 require "db.php";
 
-//セキュリティー対策
+//セキュリティー対策・セッション　＊
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -11,14 +11,10 @@ if (!isset ($_SESSION['user'] )){
     header('Location:home.php');
 }
 
-//MySQL接続
-$dbh=new PDO($dsn,$user,$password);
-$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
-$sql='SELECT * FROM japantravel order by likes DESC limit 10';
-$rec = $dbh->prepare($sql);
-$rec->execute();
-$rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
+//トークンの生成
+$toke_byte = openssl_random_pseudo_bytes(16);
+$csrf_token = bin2hex($toke_byte);
+$_SESSION['csrf_token'] = $csrf_token;
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +22,9 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ranking</title>
-    <link rel="stylesheet" href="CSS/ranking.css">
-    <script src="JS/ranking.js" async></script>
+    <title>search</title>
+    <link rel="stylesheet" href="CSS/searchdetail.css">
+    <script src="JS/searchdetail.js" async></script>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
     <script>
@@ -67,43 +63,32 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-            <!--タイトル-->
-            <h1 class="title">&nbsp;Travel Japan !</h1>
+
+        <!--タイトル-->
+        <h1 class="title">&nbsp;Travel Japan !</h1>
     </header> 
 
-    <h2 class="subtitle">＊ランキング＊<br><br></h2>
+    <h2 class="subtitle">＊詳細＊</h2>
+    <?php
+    
+    //投稿番号
+    $postname = $_POST['name'];
+    $id = $_POST['id']; 
+    $num = $_POST['num']; 
 
-    <!--投稿内容の表示-->
+    //SQL SELECT
+    if (isset($_POST["num"])) {
+        $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+        $stmt = $pdo->prepare("SELECT * FROM japantravel WHERE id = '$num'");
+        $stmt->execute();
+    } else {    
+        echo "error";
+    }
+    ?>
+
+    <!--詳細画面の表示-->
     <section class="box">
-        
-        <?php foreach($rec_list as $loop):
-        $pic_num =  $loop['id'];
-        ?>
-            <h2><?php $number = $number + 1; echo $number; ?>位</h2>
-            <h3>( いいね : <?php echo $loop['likes']?>件 )</h3>
-        <table>
-            <tr>
-                <td width="42%"><img src="images/<?php echo $loop['filename']?>" alt="" width="100%"></td>
-                <td width="40%"><?php echo $loop['name']?><br><?php echo $loop['prefecture']?><br><?php echo $loop['place']?><br><?php echo $loop['created_at']?></td>
-            
-            <form action="rankingdetail.php" method="POST">
-                <!--トークンの送信-->
-                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-                
-                <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
-                <td width="18%"><input class="submit" type="submit" name="submit" value="詳細"></td>
-            </form>
-        </tr>
-        </table>
-        <hr>
-        <?php endforeach;?>
-    </section>
-
-    <!--投稿内容の表示-->
-    <section class="pcbox">
-		<p><?php foreach($rec_list as $loop):?></p>
-            <h2><?php $suuji = $suuji + 1; echo $suuji; ?>位</h2>
-            <h3>( いいね : <?php echo $loop['likes']?>件 )</h3>
+		<?php foreach($stmt as $loop):?>
             <div class="spot">
                  <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
                  <div class="prefecture">
@@ -113,30 +98,40 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
              </div>
              <img src="images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
              
-             <!--いいね機能-->
+             <!--いいね機能 フォーム-->
              <div class="iine">
                  <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
                     <div class="like_many">
 
                         <!--いいね機能　フォーム-->
-                        <form action="love.php" method="POST" name="like_btn">
+                        <form action="yourlove.php" method="POST" name="like_btn">
                             <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
+                            <input type="hidden" name="num" value="<?php echo $loop['num']; ?>">
+                            <input type="hidden" name="name" value="<?php echo $postname; ?>">
                             <input class="submit" type="submit" value="いいね！">
                         </form>
                     </div>
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
-             
-             <!--詳細ボタン-->
+             <p class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              <div class="urls">
-                 <form action="rankingdetail.php" method="POST">
-                    <!--トークンの送信-->
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-
-                    <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
-                    <td width="18%"><input class="btn_t" type="submit" name="submit" value="詳細"></td>
-                </form>
+                 <div class="urls">
+                    <form action="yourpage.php" method="POST">
+                        <input type="hidden" name="num" value="<?php echo $num ?>">
+                        <input type="hidden" name="name" value="<?php echo $postname ?>">
+                        <input class="btn-s" type="submit" value="戻る">
+                    </form>
+                     <form action="yourcomment.php" method="POST">
+                    
+                        <!--トークンの送信-->
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
+                        <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
+                        <input type="hidden" name="num" value="<?php echo $loop['num']; ?>">
+                        <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                        <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
+                        <input class="btn-s" type="submit" value="コメント欄">
+                    </form>
+                </div>
              </div>
              <hr>
 		<?php endforeach;?>
@@ -149,6 +144,6 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="add.php">投稿する</a></li>
             <li><a href="search.php">検索</a></li>
         </ul>
-    </footer>
+    </footer>  
 </body>
 </html>

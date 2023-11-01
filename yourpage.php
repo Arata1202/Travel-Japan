@@ -1,7 +1,7 @@
 <?php
 require "db.php";
 
-//セキュリティー対策
+//セキュリティー対策・セッション　＊
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -11,14 +11,18 @@ if (!isset ($_SESSION['user'] )){
     header('Location:home.php');
 }
 
-//MySQL接続
-$dbh=new PDO($dsn,$user,$password);
-$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+$num = $_POST['num']; 
+$postname = $_POST['name'];
+$sessionid = $_SESSION['user'];
 
-$sql='SELECT * FROM japantravel order by likes DESC limit 10';
-$rec = $dbh->prepare($sql);
-$rec->execute();
-$rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
+//SQL接続
+$pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+$regist = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$postname' order by created_at DESC limit 50");
+$regist->execute();
+
+//SQL接続
+$stmt = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$postname' order by created_at DESC limit 50");
+$stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +30,9 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ranking</title>
-    <link rel="stylesheet" href="CSS/ranking.css">
-    <script src="JS/ranking.js" async></script>
+    <title>mypage</title>
+    <link rel="stylesheet" href="CSS/mypage.css">
+    <script src="JS/mypage.js" async></script>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
     <script>
@@ -67,31 +71,38 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-            <!--タイトル-->
-            <h1 class="title">&nbsp;Travel Japan !</h1>
+
+        <!--タイトル-->
+        <h1 class="title">&nbsp;Travel Japan !</h1>
     </header> 
 
-    <h2 class="subtitle">＊ランキング＊<br><br></h2>
+    <h2 class="subtitle">＊ユーザーページ＊</h2>
+    
+    <!--サブタイトル　ボタン-->
+    <div class="top">
+        <h2 style="color:deepskyblue;">ユーザー : <?php echo $_POST['name']; ?></h2>
+        <div class="urls">
+            <br><br><button onclick="location.href='index.php#n<?php echo $num ?>'">戻る</button>
+            <button class="out" onclick="location.href='outconfirm.php'">ログアウト</button>
+        </div>
+    </div>
 
     <!--投稿内容の表示-->
     <section class="box">
-        
-        <?php foreach($rec_list as $loop):
+        <br><h3>投稿一覧</h3>
+
+        <?php foreach($regist as $loop):
         $pic_num =  $loop['id'];
         ?>
-            <h2><?php $number = $number + 1; echo $number; ?>位</h2>
-            <h3>( いいね : <?php echo $loop['likes']?>件 )</h3>
         <table>
             <tr>
-                <td width="42%"><img src="images/<?php echo $loop['filename']?>" alt="" width="100%"></td>
-                <td width="40%"><?php echo $loop['name']?><br><?php echo $loop['prefecture']?><br><?php echo $loop['place']?><br><?php echo $loop['created_at']?></td>
-            
-            <form action="rankingdetail.php" method="POST">
-                <!--トークンの送信-->
-                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-                
-                <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
-                <td width="18%"><input class="submit" type="submit" name="submit" value="詳細"></td>
+                <td width="40%"><img src="images/<?php echo $loop['filename']?>" alt="" width="100%"></td>
+                <td width="45%"><?php echo $loop['prefecture']?><br><?php echo $loop['place']?><br>いいね : <?php echo $loop['likes']?>件<br><?php echo $loop['created_at']?></td>
+           
+            <form action="yourdetail.php" method="POST">
+                <input type="hidden" name="num" value="<?php echo $num; ?>">
+                <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                <td width="20%"><input class="submit" type="submit" name="submit" value="詳細"></td>
             </form>
         </tr>
         </table>
@@ -99,11 +110,10 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach;?>
     </section>
 
-    <!--投稿内容の表示-->
-    <section class="pcbox">
-		<p><?php foreach($rec_list as $loop):?></p>
-            <h2><?php $suuji = $suuji + 1; echo $suuji; ?>位</h2>
-            <h3>( いいね : <?php echo $loop['likes']?>件 )</h3>
+    <!--投稿内容の表示-->    
+    <section class="pcbox">       
+        <h3>投稿一覧</h3>
+		<?php foreach($stmt as $loop):?>
             <div class="spot">
                  <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
                  <div class="prefecture">
@@ -113,29 +123,17 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
              </div>
              <img src="images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
              
-             <!--いいね機能-->
+             <!--いいね機能 フォーム-->
              <div class="iine">
                  <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
-                    <div class="like_many">
-
-                        <!--いいね機能　フォーム-->
-                        <form action="love.php" method="POST" name="like_btn">
-                            <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
-                            <input class="submit" type="submit" value="いいね！">
-                        </form>
-                    </div>
-                 </div>
+             </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
-             
-             <!--詳細ボタン-->
              <div class="urls">
-                 <form action="rankingdetail.php" method="POST">
-                    <!--トークンの送信-->
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-
-                    <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
-                    <td width="18%"><input class="btn_t" type="submit" name="submit" value="詳細"></td>
+                <form action="yourdetail.php" method="POST">
+                    <input type="hidden" name="num" value="<?php echo $num; ?>">
+                    <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                    <input class="submit" type="submit" name="submit" value="詳細">
                 </form>
              </div>
              <hr>

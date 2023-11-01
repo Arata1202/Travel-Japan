@@ -20,7 +20,8 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
     }
     //変数定義
     $id=h($_POST["id"]);
-    $name=h($_POST["name"]);
+    $num=h($_POST["num"]);
+    $postname=h($_POST["name"]);
     $filename=h($_POST["filename"]);
     $csrf_token=h($_POST["csrf_token"]);
     $name = $_SESSION['user'];
@@ -97,11 +98,12 @@ $regist->execute();
         
         <!--コメント用フォーム-->
         <h3>コメントする</h3>
-        <form action="searchcommentok.php" method="POST">
+        <form action="yourcommentok.php" method="POST">
             
             <!--トークンの送信-->
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
 
+            <input type="hidden" name="num" value="<?php echo $num; ?>">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <input type="hidden" name="filename" value="<?php echo $filename; ?>">
             <input type="text" name="comment" value="" required size="30" style="height:25px;">
@@ -119,12 +121,13 @@ $regist->execute();
                     <td class="third">
 
                         <!--削除フォーム-->
-                        <form action="searchcommentdel.php" method="post">
+                        <form action="yourcommentdel.php" method="post">
                             <!--トークンの送信-->
                             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
 
+                            <input type="hidden" name="num" value="<?php echo $num; ?>">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
-                            <input type="hidden" name="name" value="<?php echo $name; ?>">
+                            <input type="hidden" name="name" value="<?php echo $postname; ?>">
                             <input type="hidden" name="comment" value="<?php echo $comment; ?>">
                             <input type="hidden" name="filename" value="<?php echo $filename; ?>">
                             <input class="ok" type="submit" value="削除">
@@ -171,10 +174,12 @@ $regist->execute();
 
         <!--ボタン-->
         <div class="urls">
-        <form action="searchdetail.php" method="POST">
-            <input type="hidden" name="num" value="<?php echo $id ?>">
-            <input class="btn-s" type="submit" value="戻る">
-        </form>
+            <form action="yourdetail.php" method="POST">
+                <input type="hidden" name="id" value="<?php echo $id ?>">
+                <input type="hidden" name="num" value="<?php echo $num ?>">
+                <input type="hidden" name="name" value="<?php echo $postname ?>">
+                <input class="btn-s" type="submit" value="戻る">
+            </form>
         </div>    
     </div>
         

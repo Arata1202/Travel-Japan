@@ -101,8 +101,6 @@ $_SESSION['csrf_token'] = $csrf_token;
             <p><input type="text" name="place" value="<?php echo $loop['place']?>" required size="30" style="height:25px;"></p>
             <h3>コメント</h3>
             <p><textarea name="contents" rows="5" cols="30"><?php echo $loop['contents']?></textarea></p>
-            <h3>タグ</h3>
-            <p><input type="text" name="tag" value="<?php echo $loop['tag']?>" required size="30" style="height:25px;"></p>
             <input type="hidden" name="img" value="<?php echo $loop['filename']?>">
             
             <div class="urls">

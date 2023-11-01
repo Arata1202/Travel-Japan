@@ -125,7 +125,6 @@ $stmt->execute();
                  <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
              </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <div class="contents">&nbsp;<?php echo $loop['tag']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              <div class="urls">
                 <form action="mydetail.php" method="POST">

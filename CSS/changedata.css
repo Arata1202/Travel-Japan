@@ -59,6 +59,12 @@ p{
     margin-left:5px;
     border:none;
 }
+input{
+    font-size: 16px;
+}
+form{
+    text-align: center;
+}
 
 
 /* ボトムメニュー */

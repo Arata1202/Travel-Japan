@@ -59,6 +59,15 @@ h3{
     border:none;
     margin-top:20px;
 }
+input{
+    font-size: 16px;
+}
+textarea{
+    font-size: 16px;
+}
+.upload_image{
+    text-align: center;
+}
 
 /* ボトムメニュー */
 .under_menu{

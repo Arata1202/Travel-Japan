@@ -4,6 +4,9 @@
 .pcbox{
     display:none;
 }
+.box{
+    margin-bottom: 80px;
+}
 header{
     position:fixed;
     display:flex;

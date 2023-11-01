@@ -111,17 +111,15 @@ if (!isset ($_SESSION['user'] )){
     $id = null;
     $name = h($_POST["name"]);
     $contents = h($_POST["contents"]);
-    $tag = h($_POST["tag"]);
     $place = h($_POST["place"]);
     $prefecture = h($_POST["prefecture"]);
     
     //MySQL接続
     $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-    $regist = $pdo->prepare("INSERT INTO japantravel(id, name, contents, created_at, tag, place, prefecture, filename) VALUES (:id,:name,:contents,:created_at,:tag,:place,:prefecture,:filename)");
+    $regist = $pdo->prepare("INSERT INTO japantravel(id, name, contents, created_at, place, prefecture, filename) VALUES (:id,:name,:contents,:created_at,:place,:prefecture,:filename)");
     $regist->bindParam(":id", $id);
     $regist->bindParam(":name", $name);
     $regist->bindParam(":contents", $contents);
-    $regist->bindParam(":tag", $tag);
     $regist->bindParam(":place", $place);
     $regist->bindParam(":prefecture", $prefecture);
     $regist->bindParam(":created_at", $created_at);

@@ -1,5 +1,7 @@
 <?php
-//セキュリティー対策
+require "db.php";
+
+//セキュリティー対策・セッション　＊git
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -9,10 +11,28 @@ if (!isset ($_SESSION['user'] )){
     header('Location:home.php');
 }
 
-//トークンの生成
-$toke_byte = openssl_random_pseudo_bytes(16);
-$csrf_token = bin2hex($toke_byte);
-$_SESSION['csrf_token'] = $csrf_token;
+//トークンの一致確認
+if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
+    
+    //エスケープ処理
+    function h($str){
+        return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+    }
+    //変数定義
+    $id = h($_POST["id"]);
+    $num = h($_POST["num"]);
+    $name = $_SESSION['user'];
+    $comment = h($_POST['comment']);
+    $filename = h($_POST['filename']);
+    $csrf_token=h($_POST["csrf_token"]);
+}else{
+    header('Location:form.php');
+}
+
+//MySQL接続 DELETE
+$pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+$regist = $pdo->prepare("DELETE FROM comment WHERE id = '$id' && name = '$name' && comment = '$comment'");
+$regist->execute();
 ?>
 
 <!DOCTYPE html>
@@ -20,9 +40,9 @@ $_SESSION['csrf_token'] = $csrf_token;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>add</title>
-    <link rel="stylesheet" href="CSS/add.css">
-    <script src="JS/add.js" async></script>
+    <title>comment</title>
+    <link rel="stylesheet" href="CSS/rankcommentdel.css">
+    <script src="JS/rankcommentdel.js"></script>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
     <script>
@@ -40,7 +60,7 @@ $_SESSION['csrf_token'] = $csrf_token;
 </head>
 <body>
     <header>
-        <!--ハンバーガー-->
+        <!--ハンバーガーメニュー-->
         <div class="humberger">
             <div class="btn">
                 <i></i>
@@ -60,49 +80,35 @@ $_SESSION['csrf_token'] = $csrf_token;
                     </ul>
                 </div>
             </div>
-            <script>
-                'use strict'
-                const btn = document.querySelector('.btn');
-                const block = document.querySelector('.block');
-                btn.addEventListener('click', () => {
-                    btn.classList.toggle('active');
-                    block.classList.toggle('active');
-                });
-            </script>
         </div>
+    
         <!--タイトル-->
         <h1 class="title">&nbsp;Travel Japan !</h1>
     </header> 
+    
+    <!--サブタイトル-->
+    <h2 class="subtitle">＊コメント＊</h2>
+    <p>コメントを削除しました。</p>
+    
+    <!--戻る用フォーム-->
+    <form action="yourcomment.php" method="POST">
+        <!--トークンの送信-->
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
 
-    <h2 class="subtitle">＊新規投稿＊</h2>
-        
-    <!--入力フォーム-->
-    <div class="box">
-        <form action="confirm.php" method="post" enctype="multipart/form-data">
-             <input type="hidden" name="name" value="<?php echo $_SESSION['user'] ?>" ><br>
-             <h3>都道府県</h3>
-             <input type="text" name="prefecture" value="" placeholder="例 : 神奈川県" size="30" required style="height:25px;"><br>
-             <h3>観光地名称</h3>
-             <input type="text" name="place" value="" placeholder="例 : 箱根温泉" size="30" required style="height:25px;"><br>
-             <h3>コメント</h3>
-             <textarea name="contents" value="" placeholder="例 : 箱根温泉へ行きました。" rows="5" cols="30"></textarea><br>
-             <br>
-             <input type="file" name="upload_image" size="30" required style="height:25px;">
-             <br>
+        <input type="hidden" name="num" value="<?php echo $num ?>">
+        <input type="hidden" name="id" value="<?php echo $id ?>">
+        <input type="hidden" name="name" value="<?php echo $name ?>">
+        <input type="hidden" name="filename" value="<?php echo $filename ?>">
+        <input class="submit" type="submit" value="戻る">
+    </form>
 
-             <!--トークンの送信-->
-             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-             <button class="submit" type="submit">投稿</button>
-        </form>
-     </div>
-                   
-    <!--ボトムメニュー-->         
+    <!--ボトムメニュー-->
     <footer>
         <ul class="under_menu">
             <li><a href="index.php">ホーム</a></li>
             <li><a href="add.php">投稿する</a></li>
             <li><a href="search.php">検索</a></li>
         </ul>
-    </footer>
+    </footer>  
 </body>
 </html>
