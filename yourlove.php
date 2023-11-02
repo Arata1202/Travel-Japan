@@ -17,13 +17,13 @@ function h($str){
 
 //変数定義
 $id = h($_POST['id']); 
-$postname = h($_POST['name']);
+$name = h($_POST['name']);
 $num = h($_POST['num']);
 
 //SQL いいね追加処理
-if (isset($sql_id)) {
+if (isset($id)) {
     $dbh = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-    $stmt = $dbh->prepare("UPDATE japantravel SET likes = likes + 1 WHERE id = $sql_id");
+    $stmt = $dbh->prepare("UPDATE japantravel SET likes = likes + 1 WHERE id = $id");
     $stmt->bindParam(':likes', $likes);
     $stmt->execute();
 } else {    
@@ -87,7 +87,8 @@ if (isset($sql_id)) {
     <div class="urls">
         <form action="yourdetail.php" method="POST">
             <input type="hidden" name="num" value="<?php echo $num ?>">
-            <input type="hidden" name="name" value="<?php echo $postname ?>">
+            <input type="hidden" name="name" value="<?php echo $name ?>">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <input class="submit" type="submit" value="戻る">
         </form>
     </div>

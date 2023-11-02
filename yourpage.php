@@ -12,16 +12,16 @@ if (!isset ($_SESSION['user'] )){
 }
 
 $num = $_POST['num']; 
-$postname = $_POST['name'];
+$name = $_POST['name'];
 $sessionid = $_SESSION['user'];
 
 //SQL接続
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-$regist = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$postname' order by created_at DESC limit 50");
+$regist = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$name' order by created_at DESC limit 50");
 $regist->execute();
 
 //SQL接続
-$stmt = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$postname' order by created_at DESC limit 50");
+$stmt = $pdo->prepare("SELECT * FROM japantravel WHERE name = '$name' order by created_at DESC limit 50");
 $stmt->execute();
 ?>
 
@@ -80,10 +80,10 @@ $stmt->execute();
     
     <!--サブタイトル　ボタン-->
     <div class="top">
-        <h2 style="color:deepskyblue;">ユーザー : <?php echo $_POST['name']; ?></h2>
+        <h2 style="color:deepskyblue;"><?php echo $_POST['name']; ?></h2>
         <div class="urls">
             <br><br><button onclick="location.href='index.php#n<?php echo $num ?>'">戻る</button>
-            <button class="out" onclick="location.href='outconfirm.php'">ログアウト</button>
+            <button class="out" onclick="location.href='outconfirm.php'">フォロー</button>
         </div>
     </div>
 
@@ -101,7 +101,8 @@ $stmt->execute();
            
             <form action="yourdetail.php" method="POST">
                 <input type="hidden" name="num" value="<?php echo $num; ?>">
-                <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                 <td width="20%"><input class="submit" type="submit" name="submit" value="詳細"></td>
             </form>
         </tr>
@@ -116,6 +117,7 @@ $stmt->execute();
 		<?php foreach($stmt as $loop):?>
             <div class="spot">
                  <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
+                 <p class="id"><b>&nbsp;<?php echo $loop['id']?></b></p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>
@@ -132,7 +134,8 @@ $stmt->execute();
              <div class="urls">
                 <form action="yourdetail.php" method="POST">
                     <input type="hidden" name="num" value="<?php echo $num; ?>">
-                    <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                    <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                     <input class="submit" type="submit" name="submit" value="詳細">
                 </form>
              </div>

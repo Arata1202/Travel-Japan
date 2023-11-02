@@ -21,17 +21,16 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
     //変数定義
     $id=h($_POST["id"]);
     $num=h($_POST["num"]);
-    $postname=h($_POST["name"]);
+    $name=h($_POST["name"]);
     $filename=h($_POST["filename"]);
     $csrf_token=h($_POST["csrf_token"]);
-    $name = $_SESSION['user'];
 }else{
     header('Location:form.php');
 }
 
 //SQL接続　自分のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$name' order by created_at DESC limit 50");
+$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$user' order by created_at DESC limit 50");
 $stmt->execute();
 
 //SQL接続　全体のコメント
@@ -105,6 +104,7 @@ $regist->execute();
 
             <input type="hidden" name="num" value="<?php echo $num; ?>">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
             <input type="hidden" name="filename" value="<?php echo $filename; ?>">
             <input type="text" name="comment" value="" required size="30" style="height:25px;">
             <input class="submit" type="submit" value="投稿">
@@ -127,7 +127,7 @@ $regist->execute();
 
                             <input type="hidden" name="num" value="<?php echo $num; ?>">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
-                            <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                            <input type="hidden" name="user" value="<?php echo $_SESSION['user']; ?>">
                             <input type="hidden" name="comment" value="<?php echo $comment; ?>">
                             <input type="hidden" name="filename" value="<?php echo $filename; ?>">
                             <input class="ok" type="submit" value="削除">
@@ -177,7 +177,7 @@ $regist->execute();
             <form action="yourdetail.php" method="POST">
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="hidden" name="num" value="<?php echo $num ?>">
-                <input type="hidden" name="name" value="<?php echo $postname ?>">
+                <input type="hidden" name="name" value="<?php echo $loop['name'] ?>">
                 <input class="btn-s" type="submit" value="戻る">
             </form>
         </div>    

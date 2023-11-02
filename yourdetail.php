@@ -72,14 +72,14 @@ $_SESSION['csrf_token'] = $csrf_token;
     <?php
     
     //投稿番号
-    $postname = $_POST['name'];
+    $name = $_POST['name'];
     $id = $_POST['id']; 
     $num = $_POST['num']; 
 
     //SQL SELECT
     if (isset($_POST["num"])) {
         $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-        $stmt = $pdo->prepare("SELECT * FROM japantravel WHERE id = '$num'");
+        $stmt = $pdo->prepare("SELECT * FROM japantravel WHERE id = '$id'");
         $stmt->execute();
     } else {    
         echo "error";
@@ -106,8 +106,8 @@ $_SESSION['csrf_token'] = $csrf_token;
                         <!--いいね機能　フォーム-->
                         <form action="yourlove.php" method="POST" name="like_btn">
                             <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
-                            <input type="hidden" name="num" value="<?php echo $loop['num']; ?>">
-                            <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                            <input type="hidden" name="num" value="<?php echo $num; ?>">
+                            <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                             <input class="submit" type="submit" value="いいね！">
                         </form>
                     </div>
@@ -116,9 +116,11 @@ $_SESSION['csrf_token'] = $csrf_token;
              <p class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              <div class="urls">
                  <div class="urls">
+
+                    <!-- 戻る -->
                     <form action="yourpage.php" method="POST">
                         <input type="hidden" name="num" value="<?php echo $num ?>">
-                        <input type="hidden" name="name" value="<?php echo $postname ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                         <input class="btn-s" type="submit" value="戻る">
                     </form>
                      <form action="yourcomment.php" method="POST">
@@ -126,8 +128,8 @@ $_SESSION['csrf_token'] = $csrf_token;
                         <!--トークンの送信-->
                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
                         <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
-                        <input type="hidden" name="num" value="<?php echo $loop['num']; ?>">
-                        <input type="hidden" name="name" value="<?php echo $postname; ?>">
+                        <input type="hidden" name="num" value="<?php echo $num; ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                         <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
                         <input class="btn-s" type="submit" value="コメント欄">
                     </form>

@@ -21,7 +21,7 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
     //変数定義
     $id = h($_POST["id"]);
     $num = h($_POST["num"]);
-    $name = $_SESSION['user'];
+    $name = $_POST['user'];
     $comment = h($_POST['comment']);
     $filename = h($_POST['filename']);
     $csrf_token=h($_POST["csrf_token"]);
@@ -97,7 +97,7 @@ $regist->execute();
 
         <input type="hidden" name="num" value="<?php echo $num ?>">
         <input type="hidden" name="id" value="<?php echo $id ?>">
-        <input type="hidden" name="name" value="<?php echo $name ?>">
+        <input type="hidden" name="name" value="<?php echo $loop['name'] ?>">
         <input type="hidden" name="filename" value="<?php echo $filename ?>">
         <input class="submit" type="submit" value="戻る">
     </form>

@@ -80,14 +80,15 @@ $regist->execute();
 		<?php foreach($regist as $loop):?>
             <div class="spot">
                  <p class="name" id="n<?php echo $loop['id']; ?>">
-                    <b>&nbsp;<?php echo $loop['name']?>&nbsp;</b>
-
+                 &nbsp;
+                        
                     <!--　フォローページ　-->
-                    <form action="yourpage.php" method="POST">
+                    <form class="follow" action="yourpage.php" method="POST">
                         <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
-                        <input type="submit" value="">
+                        <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
                     </form>
+                    
                 </p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>

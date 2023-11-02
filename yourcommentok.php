@@ -21,7 +21,7 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
     //変数定義
     date_default_timezone_set('Asia/Tokyo');
     $created_at=date("Y-m-d H:i:s");
-    $name = $_SESSION['user'];
+    $name = $_POST['name'];
     $id=h($_POST["id"]);
     $num=h($_POST["num"]);
     $comment=h($_POST['comment']);
@@ -93,6 +93,7 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
         
         <input type="hidden" name="num" value="<?php echo $num ?>">
+        <input type="hidden" name="name" value="<?php echo $loop['name'] ?>">
         <input type="hidden" name="id" value="<?php echo $id ?>">
         <input type="hidden" name="filename" value="<?php echo $filename ?>">
         <input class="submit" type="submit" value="コメントを見る">
