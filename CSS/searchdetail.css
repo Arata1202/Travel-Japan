@@ -95,6 +95,7 @@ button{
     font-size:15px;
     border-radius:5%;
     color:black;
+    background-color: lightgray;
     border:none;
     margin-right:5px;
 }
@@ -108,6 +109,20 @@ button{
     border:none;
     margin-left:5px;
 }
+.follow{
+    text-align: left;
+}
+.btn_tr{
+    font-size: 20px;
+    border: none;
+    color: black;
+    background-color: white;
+    height: 20px;
+    text-align: left;
+    padding-left: 0;
+    margin-left: 0;
+}
+
 
 /* ボトムメニュー */
 .under_menu{

@@ -80,10 +80,17 @@ $stmt->execute();
     
     <!--サブタイトル　ボタン-->
     <div class="top">
-        <h2 style="color:deepskyblue;"><?php echo $_POST['name']; ?></h2>
+        <h2 style="color:deepskyblue;">ユーザー : <?php echo $_POST['name']; ?></h2>
         <div class="urls">
             <br><br><button onclick="location.href='index.php#n<?php echo $num ?>'">戻る</button>
-            <button class="out" onclick="location.href='outconfirm.php'">フォロー</button>
+            <!--
+            <form action="yourfollow.php" method="POST">
+                <input type="hidden" name="num" value="<?php echo $num; ?>">
+                <input type="hidden" name="name" value="<?php echo $sessionid; ?>">
+                <input type="hidden" name="follow" value="<?php echo $name; ?>">
+                <button class="out" type="input">フォロー</button>
+            </form>
+            -->
         </div>
     </div>
 
@@ -117,7 +124,6 @@ $stmt->execute();
 		<?php foreach($stmt as $loop):?>
             <div class="spot">
                  <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
-                 <p class="id"><b>&nbsp;<?php echo $loop['id']?></b></p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>

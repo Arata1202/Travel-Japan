@@ -27,10 +27,11 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
 }else{
     header('Location:form.php');
 }
+$users = $_SESSION['user'];
 
 //SQL接続　自分のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$user' order by created_at DESC limit 50");
+$stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$users' order by created_at DESC limit 50");
 $stmt->execute();
 
 //SQL接続　全体のコメント
@@ -104,7 +105,7 @@ $regist->execute();
 
             <input type="hidden" name="num" value="<?php echo $num; ?>">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
-            <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+            <input type="hidden" name="name" value="<?php echo $users; ?>">
             <input type="hidden" name="filename" value="<?php echo $filename; ?>">
             <input type="text" name="comment" value="" required size="30" style="height:25px;">
             <input class="submit" type="submit" value="投稿">

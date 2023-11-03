@@ -21,7 +21,6 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
     //変数定義
     date_default_timezone_set('Asia/Tokyo');
     $created_at=date("Y-m-d H:i:s");
-    $name = $_POST['name'];
     $id=h($_POST["id"]);
     $num=h($_POST["num"]);
     $comment=h($_POST['comment']);
@@ -30,6 +29,7 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
 }else{
     header('Location:form.php');
 }
+$name = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>

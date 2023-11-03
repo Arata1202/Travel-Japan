@@ -91,7 +91,16 @@ $_SESSION['csrf_token'] = $csrf_token;
     <section class="box">
 		<?php foreach($stmt as $loop):?>
             <div class="spot">
-                 <p class="name"><b>&nbsp;<?php echo $loop['name']?></b></p>
+                 <p class="name">
+                 &nbsp;
+                 
+                    <!--　フォローページ　-->
+                    <form class="follow" action="rankyourpage.php" method="POST">
+                        <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                        <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
+                    </form>
+                 </p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>

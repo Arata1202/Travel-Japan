@@ -30,7 +30,7 @@
         <p>Travel Japan ! はこちら : <a href="https://traveljapan.aratasportfolio.com/form.php" target="_blank">ログイン</a></p>
         <p>会員ID guest , パスワード guest でログインすることも可能です。</p>
         <br>
-        <p>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-" target="_blank">Arata1202</a></p>
+        <p>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-DEPLOY" target="_blank">Arata1202</a></p>
         <hr>
 
         <h2 class="subtitle">アップデート</h2>

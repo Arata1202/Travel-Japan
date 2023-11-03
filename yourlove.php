@@ -89,7 +89,7 @@ if (isset($id)) {
             <input type="hidden" name="num" value="<?php echo $num ?>">
             <input type="hidden" name="name" value="<?php echo $name ?>">
             <input type="hidden" name="id" value="<?php echo $id ?>">
-            <input class="submit" type="submit" value="戻る">
+            <input class="btn_s" type="submit" value="戻る">
         </form>
     </div>
 
