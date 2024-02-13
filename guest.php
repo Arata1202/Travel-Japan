@@ -20,7 +20,7 @@ $regist->execute();
     <title>guest</title>
     <link rel="stylesheet" href="CSS/guest.css">
     <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192 2.png">
     <script src="JS/guest.js" async></script>
     <script>
         window.addEventListener('load', function () {

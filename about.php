@@ -1,5 +1,5 @@
 <?php
-//セキュリティー対策・セッション　＊
+//セキュリティー対策・セッション　＊ 
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -63,7 +63,7 @@ if (!isset ($_SESSION['user'] )){
 
     <div class="box">
         <h2 class="subtitle">＊ Travel Japan ! ＊</h2>
-        <h3>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-" target="_blank">Arata1202</a></h3>
+        <h3>GitHub はこちら : <a href="https://github.com/Arata1202/Travel-Japan-DEPLOY" target="_blank">Arata1202</a></h3>
         <hr>
         
         <h2 class="subtitle">＊ 開発のきっかけ ＊</h2>
