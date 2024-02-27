@@ -48,18 +48,15 @@ $regist->execute();
              </div>
              <img src="../../images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
              
-             <!--いいね機能-->
              <div class="iine">
-                 <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
-                    <div class="like_many">
-
-                        <!--いいね機能　フォーム-->
-                        <form action="like.php" method="POST" name="like_btn">
-                            <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
-                            <input class="submit" type="submit" value="いいね！">
-                        </form>
-                    </div>
-                 </div>
+                <div class="many">&nbsp;いいね！ : <span id="like-count-<?php echo $loop['id']; ?>"><?php echo $loop['likes']?></span>件</div>
+                <div class="like_many">
+                    <form action="like.php" method="POST" class="like-form">
+                        <input type="hidden" name="post_id" value="<?php echo $loop['id']; ?>">
+                        <button type="button" class="likeButton<?php if($loop['liked']) echo ' liked'; ?>" data-post-id="<?php echo $loop['id']; ?>">いいね！</button>
+                    </form>
+                </div>
+            </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              
@@ -87,26 +84,36 @@ $regist->execute();
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('.likeButton').click(function(){
+                var button = $(this);
+                var post_id = button.data('post-id');
+                var liked = button.hasClass('liked');
+                var likeCount = $('#like-count-' + post_id);
+                
+                // いいねの状態を切り替える
+                button.toggleClass('liked');
+                var likeState = button.hasClass('liked') ? 1 : 0;
 
-        $(function(){
-            $(window).on('load',function(){
-                $('.loader').delay(500).fadeOut(500);
-                $('.loader-bg').delay(800).fadeOut(700);
+                // いいねのデータをサーバーに送信
+                $.ajax({
+                    type: 'POST',
+                    url: 'like.php',
+                    data: {post_id: post_id, like: likeState},
+                    success: function(response){
+                        // 成功したら、いいねの数を更新
+                        var data = JSON.parse(response);
+                        if(data.success) {
+                            likeCount.text(data.likes);
+                        }
+                    },
+                    error: function(){
+                        // エラーが発生した場合は、ボタンのスタイルを元に戻す
+                        button.toggleClass('liked', liked);
+                    }
+                });
             });
-            setTimeout(function(){
-                $('.loader-bg').fadeOut(500);
-            },5000);
         });
-
     </script>
 </body>
 </html>
-
-        
-
-
-        
-        
-        
-        
- 
