@@ -123,6 +123,23 @@ button{
     margin-left: 0;
 }
 
+/* いいねボタンのスタイル */
+.likeButton {
+    background-color: #007bff; /* デフォルトの背景色 */
+    color: #fff; /* デフォルトのテキスト色 */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    min-height: 30px; /* ボタンの高さを維持 */
+}
+
+/* いいねされている場合のスタイル */
+.likeButton.liked {
+    background-color: #ccc !important; /* グレーの背景色 */
+    color: #000 !important; /* グレーのテキスト色 */
+    cursor: not-allowed; /* クリックできないようにする */
+}
+
 
 /* ボトムメニュー */
 .under_menu{

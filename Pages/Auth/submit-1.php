@@ -1,5 +1,4 @@
 <?php
-//セキュリティー対策・セッション　＊
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -8,7 +7,6 @@ $toke_byte = openssl_random_pseudo_bytes(30);
 $csrf_token = bin2hex($toke_byte);
 $_SESSION['csrf_token'] = $csrf_token;
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -20,7 +18,6 @@ $_SESSION['csrf_token'] = $csrf_token;
 <body>
     <?php require "../../Layouts/header.php" ?>
 
-    <!--メイン-->
     <h2 class="subtitle">＊新規会員登録＊</h2>
     <div class="box">
         <form action="submit-2.php" method="post" onsubmit="return validateForm();">
@@ -72,7 +69,6 @@ $_SESSION['csrf_token'] = $csrf_token;
             <br><button onclick="location.href='login-1.php'">既にアカウントをお持ちの方はこちら</button>
         </div>
     </div>      
-    
     <script src="JS/submit-1.js"></script>
     <script src="../../Validation/submit.js"></script>
 </body>

@@ -36,6 +36,12 @@ h3{
     text-align:center;
     margin-bottom:5px;
 }
+form input{
+    font-size: 16px;
+}
+form textarea{
+    font-size: 16px;
+}
 form p{
     margin-top:0px;
 }

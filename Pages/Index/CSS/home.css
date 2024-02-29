@@ -218,19 +218,23 @@ h5{
 
 /* いいねボタンのスタイル */
 .likeButton {
-    background-color: #007bff; /* デフォルトの背景色 */
-    color: #fff; /* デフォルトのテキスト色 */
+    background-color: #007bff !important; /* デフォルトの背景色 */
+    color: #fff !important; /* デフォルトのテキスト色 */
     border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    min-height: 30px; /* ボタンの高さを維持 */
+    padding: 5px 10px !important;
+    cursor: pointer !important;
+    min-height: 30px !important; /* ボタンの高さを維持 */
+    width: 80px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 5%;
 }
 
 /* いいねされている場合のスタイル */
 .likeButton.liked {
     background-color: #ccc !important; /* グレーの背景色 */
     color: #000 !important; /* グレーのテキスト色 */
-    cursor: not-allowed; /* クリックできないようにする */
+    cursor: not-allowed !important; /* クリックできないようにする */
 }
 @media screen and (min-width: 767px) {
     .box{

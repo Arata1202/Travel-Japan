@@ -1,10 +1,8 @@
 <?php
-//セキュリティー対策
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,12 +12,58 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/add.css">
 </head>
 <body>
-    
-    <?php require "../../Layouts/header.php" ?>
+    <div class="loader" style="display:none;">
+        <div class="loader-inner ball-pulse">
+        <div></div>
+        <div></div>
+        <div></div>
+        </div>
+    </div>
+    <style>
+        .loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.ball-pulse > div {
+    background-color: #333;
+    width: 25px; /* ボールのサイズを大きくする */
+    height: 25px; /* ボールのサイズを大きくする */
+    border-radius: 100%;
+    margin: 2px;
+    -webkit-animation: ball-pulse 1.2s infinite ease-in-out;
+    animation: ball-pulse 1.2s infinite ease-in-out;
+}
+        @-webkit-keyframes ball-pulse {
+    0%, 100% { 
+        -webkit-transform: scale(0.75);
+        transform: scale(0.75);
+    }
+    50% { 
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes ball-pulse {
+    0%, 100% { 
+        transform: scale(0.75);
+    }
+    50% { 
+        transform: scale(1);
+    }
+}
+    </style>
+    <?php require "../../Layouts/header.php" ?>
     <h2 class="subtitle">＊新規投稿＊</h2>
-        
-    <!--入力フォーム-->
     <div class="box">
         <form action="add-2.php" method="post" enctype="multipart/form-data">
              <input type="hidden" name="name" value="<?php echo $_SESSION['user'] ?>" ><br>
@@ -34,10 +78,20 @@ session_regenerate_id();
              <br>
              <button class="submit" type="submit">投稿</button>
         </form>
-     </div>
-                   
+     </div>              
      <?php require "../../Layouts/footer.php" ?>
-
+     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+     <script type="text/javascript">
+        $(document).ready(function(){
+            $('form').on('submit', function() {
+                $('.loader').show();
+            });
+            $(window).on('load', function() {
+                $('.loader').hide();
+            });
+        });
+    </script>
     <script src="JS/add.js"></script>
 </body>
 </html>

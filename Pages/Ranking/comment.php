@@ -17,6 +17,22 @@ $name=h($_POST["name"]);
 $filename=h($_POST["filename"]);
 $name = $_SESSION['user'];
 
+// コメントの投稿処理
+if (!empty($_POST["comment"])) { // 修正: $_POST["comment"]が空でない場合のみ処理を行う
+    $comment = h($_POST["comment"]); // 修正: $comment変数を定義
+    try {
+        $dbh = new PDO($dsn, $user, $password);
+        $stmt = $dbh->prepare("INSERT INTO comment(id, name, comment, created_at) VALUES (:id, :name, :comment, NOW())");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':comment', $comment);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        // エラー処理
+        echo "エラーが発生しました：" . $e->getMessage();
+    }
+}
+
 //SQL接続　自分のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$name' order by created_at DESC limit 50");
@@ -45,9 +61,9 @@ $regist->execute();
             <h2 class="subtitle">＊コメント＊</h2>
             <img src="../../images/<?php echo $filename?>" alt="" style="width:100%;">
             
-            <!--コメント用フォーム-->
+            <!-- コメント用フォーム -->
             <h3>コメントする</h3>
-            <form action="comment-add.php" method="POST">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="filename" value="<?php echo $filename; ?>">
                 <input type="text" name="comment" value="" required size="30" style="height:25px;">

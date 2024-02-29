@@ -1,10 +1,8 @@
 <?php
-//セキュリティー対策
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,10 +12,7 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/contact-3.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-
-    <!--メイン-->
     <h2 class="subtitle">＊お問い合わせ＊</h2>
     <p>
     お問い合わせありがとうございます。<br>
@@ -28,9 +23,7 @@ session_regenerate_id();
     <div class="urls">
         <button onclick="location.href='../Index/home.php'">ホームに戻る</button>
     </div>
-
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/contact-3.js"></script>
 </body>
 </html>

@@ -15,36 +15,24 @@ function h($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
 
-//検索処理
 if (isset($_POST["search"])) {
-    if (isset($_POST["prefecture"])){
-        $name = h($_POST["name"]);
-    }
-    if (isset($_POST["prefecture"]) && empty($_POST["place"])){
-        $prefecture = h($_POST["prefecture"]);
-        $place = '';
-    }
-    if (empty($_POST["prefecture"]) && isset($_POST["place"])){
-        $prefecture = '';
-        $place = h($_POST["place"]);
-    }
-    if (isset($_POST["prefecture"]) && isset($_POST["place"])){
-        $prefecture = h($_POST["prefecture"]);
-        $place = h($_POST["place"]);
-    }
+    $searchQuery = h($_POST["searchQuery"]); // ユーザーの検索クエリを取得
 
-    //MySQL　セレクト文
-    $sql="SELECT * FROM japantravel WHERE prefecture like '%{$prefecture}%' and place like '%{$place}%' and name like'%{$name}%' order by created_at DESC limit 9999";
+    // MySQL セレクト文
+    $sql="SELECT * FROM japantravel WHERE prefecture LIKE '%{$searchQuery}%' OR place LIKE '%{$searchQuery}%' OR name LIKE '%{$searchQuery}%' ORDER BY created_at DESC LIMIT 9999";
     $rec = $dbh->prepare($sql);
     $rec->execute();
     $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
-}else{
-
-    $sql='SELECT * FROM japantravel WHERE 1 order by created_at DESC limit 50';
+} else {
+    // 初期表示用のデータ取得
+    $sql='SELECT * FROM japantravel WHERE 1 ORDER BY created_at DESC LIMIT 50';
     $rec = $dbh->prepare($sql);
     $rec->execute();
     $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
-}?>
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -60,16 +48,10 @@ if (isset($_POST["search"])) {
 
         <h2 class="subtitle">＊検索＊</h2>
 
-        <!--検索フォーム-->
         <div class="searchbox">
             <form action="" method="post">
-                <h3>都道府県で検索</h3>
-                <p><input type="text" name="prefecture" placeholder="例 : 岐阜県" size="30" style="height:25px;"></p>
-                <h3>観光地で検索</h3>
-                <p><input type="text" name="place" placeholder="例 : 下呂温泉" size="30" style="height:25px;"></p>
-                <h3>ユーザー名で検索</h3>
-                <p><input type="text" name="name" placeholder="例 : user" size="30" style="height:25px;"></p>
-                <p><input class="btn_t" type="submit" name="search" value="検索" style="height:25px;"></p>
+                <p><input type="text" name="searchQuery" placeholder="都道府県、観光地、ユーザー名で検索" size="30" style="height:25px;"></p>
+                <p><input class="btn_t" type="submit" name="search" value="検索" style="height:30px;"></p>
             </form>
         </div>
             
@@ -86,10 +68,7 @@ if (isset($_POST["search"])) {
                 <td width="42%"><img src="../../images/<?php echo $loop['filename']?>" alt="" width="100%"></td>
                 <td width="40%"><?php echo $loop['name']?><br><?php echo $loop['prefecture']?><br><?php echo $loop['place']?><br>いいね : <?php echo $loop['likes']?>件<br><?php echo $loop['created_at']?></td>
             
-            <form action="searchdetail.php" method="POST">
-                <!--トークンの送信-->
-                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-                
+            <form action="detail.php" method="POST">
                 <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                 <td width="18%"><input class="submit" type="submit" name="submit" value="詳細"></td>
             </form>
@@ -129,9 +108,6 @@ if (isset($_POST["search"])) {
              <!--コメントボタン-->
              <div class="urls">
                  <form action="detail.php" method="POST">
-                    <!--トークンの送信-->
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-
                     <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                     <td width="18%"><input class="btn_t" type="submit" name="submit" value="詳細"></td>
                 </form>

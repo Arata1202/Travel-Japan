@@ -1,58 +1,32 @@
 <?php
-require "../../Config/db.php";
-
-//セキュリティー対策・セッション　＊
-header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
+require "../../Config/db.php";
 
-?>
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_name = $_SESSION['user']; // ログインユーザーの名前
+    $post_id = $_POST['post_id'];
+    $like = filter_var($_POST['like'], FILTER_VALIDATE_BOOLEAN); // 追加: いいねの状態
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>search</title>
-    <link rel="stylesheet" href="CSS/like.css">
-</head>
-<body>
-    
-    <?php require "../../Layouts/header.php" ?>
-    
-    <!--いいね機能　処理-->
-    <?php  
-    
-    //エスケープ処理
-    function h($str){
-        return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+    $dbh = new PDO($dsn, $user, $password);
+
+    if ($like) {
+        // いいねを追加
+        $stmt = $dbh->prepare("INSERT INTO good_list (user_name, post_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE user_name = user_name");
+    } else {
+        // いいねを解除
+        $stmt = $dbh->prepare("DELETE FROM good_list WHERE user_name = ? AND post_id = ?");
     }
-    //変数定義
-    $sql_id = h($_POST['id']); 
-    
-    //SQL いいね追加処理
-    if (isset($sql_id)) {
-        $dbh = new PDO($dsn,$user,$password);
-        $stmt = $dbh->prepare("UPDATE japantravel SET likes = likes + 1 WHERE id = $sql_id");
-        $stmt->bindParam(':likes', $likes);
-        $stmt->execute();
-    } else {    
-        echo "error";
-    }
-    ?>
+    $stmt->execute([$user_name, $post_id]);
 
-    <h2 class="subtitle">＊いいね＊</h2>
-    <p>いいね！しました。</p>
+    // いいねの数を更新
+    $stmt = $dbh->prepare("UPDATE japantravel SET likes = (SELECT COUNT(*) FROM good_list WHERE post_id = ?) WHERE id = ?");
+    $stmt->execute([$post_id, $post_id]);
 
-    <div class="urls">
-        <form action="detail.php" method="POST">
-            <input type="hidden" name="num" value="<?php echo $sql_id ?>">
-            <input class="submit" type="submit" value="戻る">
-        </form>
-    </div>
+    $stmt = $dbh->prepare("SELECT COUNT(*) FROM good_list WHERE post_id = ?");
+    $stmt->execute([$post_id]);
+    $likes = $stmt->fetchColumn();
 
-    <?php require "../../Layouts/footer.php" ?>
-
-    <script src="JS/like.js"></script>
-</body>
-</html>
+    echo json_encode(['success' => true, 'likes' => $likes]);
+    exit();
+}

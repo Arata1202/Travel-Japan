@@ -1,5 +1,4 @@
 <?php
-//セキュリティー対策・セッション　＊
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
@@ -18,7 +17,6 @@ $_SESSION['csrf_token'] = $csrf_token;
     <link rel="stylesheet" href="CSS/login-1.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/auth-header.php" ?>
 
     <h2 class="subtitle">＊ログイン＊</h2>
@@ -26,7 +24,6 @@ $_SESSION['csrf_token'] = $csrf_token;
     <!--入力フォーム-->
     <div class="box">
         <form action="login-2.php" method="post" onsubmit="return validateForm();">
-            <!--トークンの送信-->
             <input type="hidden" name="csrf_token" value="<?=$csrf_token?>">
             <div class="flex_box">
                 <h3>メールアドレス</h3><p class="red">(*必須)</p>

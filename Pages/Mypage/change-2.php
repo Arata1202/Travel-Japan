@@ -1,10 +1,14 @@
 <?php
-//セキュリティー対策・セッション　＊
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
-?>
 
+if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
+    //
+} else {
+    header('Location: login-1.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,11 +18,7 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/change-2.css">
 </head>
 <body>
-    
-    <?php require "../../Layouts/header.php" ?>
-    
-    <?php
-    //エスケープ処理
+    <?php require "../../Layouts/header.php";
     function h($str){
         return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
     }
@@ -30,9 +30,8 @@ session_regenerate_id();
     $csrf_token=h($_POST["csrf_token"]);
     ?>
     <h2 class="subtitle">＊登録情報変更＊</h2>
-
-    <!--確認フォーム-->
     <form action="change-3.php" method="post">   
+    <input type="hidden" name="csrf_token" value="<?=$csrf_token?>">
         <p>内容をご確認の上、<br>宜しければ登録してください。</p>
         <div class="box">
             <h3>氏名</h3>
@@ -46,23 +45,17 @@ session_regenerate_id();
             <h3>電話番号</h3>
            <p><?php echo $tel ?><p>
         </div>
-
-        <!--ボタン-->
         <div class="flex_box">
             <input class="btn_s" type="button" value="内容を修正する" onclick="history.back(-1)">
             <button class="submit" type="submit" name="add">登録する</button>
         </div>
-        
-        <!--トークンの送信-->
         <input type="hidden" name="name" value="<?php echo $name;?>">
         <input type="hidden" name="password" value="<?php echo $password;?>">
         <input type="hidden" name="address" value="<?php echo $address;?>">
         <input type="hidden" name="id" value="<?php echo $id;?>">
         <input type="hidden" name="tel" value="<?php echo $tel;?>">
     </form>
-    
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/change-2.js"></script>
 </body>
 </html>

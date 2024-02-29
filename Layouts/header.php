@@ -22,7 +22,7 @@
     </div>
     
     <!--タイトル-->
-    <h1 class="title">&nbsp;Travel Japan !</h1>
+    <h1 class="title"><a href="../../Pages/Index/home.php">&nbsp;Travel Japan !</a></h1>
 </header> 
 
 <script>

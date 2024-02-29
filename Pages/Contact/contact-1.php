@@ -3,8 +3,11 @@
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
-?>
 
+$toke_byte = openssl_random_pseudo_bytes(30);
+$csrf_token = bin2hex($toke_byte);
+$_SESSION['csrf_token'] = $csrf_token;
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,15 +17,10 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/contact-1.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-    
     <h2 class="subtitle">＊お問い合わせ＊</h2>
-    <!--入力フォーム-->
     <div class="box">
         <form action="contact-2.php" method="post">
-            
-            <!--トークンの送信-->
             <input type="hidden" name="csrf_token" value="<?=$csrf_token?>">
             <div class="box_first">    
                 <div class="require">
@@ -52,9 +50,7 @@ session_regenerate_id();
             <p><input class="submit" type="submit" name="submit" value="確認画面へ"></p>
         </form>
     </div>     
-
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/contact-1.js"></script>
 </body>
 </html>

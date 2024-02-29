@@ -1,10 +1,8 @@
-<?php
-//セキュリティー対策・セッション　＊ 
+<?php 
 header('X-Frame-Options: SAMEORIGIN');
 session_start();
 session_regenerate_id();
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
