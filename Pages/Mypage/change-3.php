@@ -19,9 +19,10 @@ require "../../Config/db.php";
         }  
         $id = h($_POST["id"]);
         $name = h($_POST["name"]);
-        $pass = h($_POST["password"]);
+        $pass_before = h($_POST["password"]);
         $address = h($_POST["address"]);
         $tel = h($_POST["tel"]);
+        $pass = password_hash($pass_before, PASSWORD_DEFAULT);
         
         $pdo = new PDO($dsn_s,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
         $regist = $pdo->prepare("UPDATE user SET id = '$id', name = '$name', password = '$pass', address = '$address', tel = '$tel'  WHERE id = '$id'");

@@ -31,7 +31,7 @@ require "../../Config/db.php";
             <div class="spot">
                  <p class="name">
                     &nbsp;
-                    <form class="btn_tr" action="searchyourpage.php" method="POST">
+                    <form class="btn_tr" action="yourpage.php" method="GET">
                         <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                         <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
@@ -57,7 +57,7 @@ require "../../Config/db.php";
              <div class="urls">
                  <div class="urls">
                      <button onclick="location.href='search.php'">戻る</button>
-                    <form action="comment.php" method="POST">
+                    <form action="comment.php" method="GET">
                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
                         <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">

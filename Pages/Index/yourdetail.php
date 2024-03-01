@@ -2,39 +2,49 @@
 require "../../Security/all.php";
 require "../../Redirect/all.php";
 require "../../Config/db.php";
-
-$pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
-$regist = $pdo->prepare("SELECT * FROM japantravel order by created_at DESC limit 50");
-$regist->execute();
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Travel Japan !</title>
-    <link rel="stylesheet" href="CSS/home.css">
+    <title>search</title>
+    <link rel="stylesheet" href="CSS/yourdetail.css">
 </head>
 <body>
-    <?php require "../../Layouts/header.php" ?>
-    <h2 class="subtitle">＊最新の投稿＊</h2>
+    <?php require "../../Layouts/header.php" ?>  
+    <h2 class="subtitle">＊詳細＊</h2>
+    <?php
+    $name = $_GET['name'];
+    $id = $_GET['id']; 
+    $num = $_GET['num']; 
+
+    if (isset($_GET["id"])) {
+        $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+        $stmt = $pdo->prepare("SELECT * FROM japantravel WHERE id = '$id'");
+        $stmt->execute();
+    } else {    
+        echo "error";
+    }
+    ?>
     <section class="box">
-		<?php foreach($regist as $loop):?>
+		<?php foreach($stmt as $loop):?>
             <div class="spot">
-                 <p class="name" id="n<?php echo $loop['id']; ?>">
+                 <p class="name">
                  &nbsp;
-                    <form class="follow" action="yourpage.php" method="GET">
-                        <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
-                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
-                        <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
-                    </form>      
-                </p>
+                        <form class="follow" action="yourpage.php" method="GET">
+                            <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
+                            <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                            <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
+                        </form>
+                 </p>
                  <div class="prefecture">
                      <p><?php echo $loop['prefecture']?></p>
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>
                  </div>
              </div>
-             <img src="../../images/<?php echo $loop['filename']?>" loading="lazy" alt="" style="width:100%;">
+             <img src="../../images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
              <div class="iine">
                 <div class="many">&nbsp;いいね！ : <span id="like-count-<?php echo $loop['id']; ?>"><?php echo $loop['likes']?></span>件</div>
                 <div class="like_many">
@@ -45,20 +55,28 @@ $regist->execute();
                 </div>
             </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
-             <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
+             <p class="contents">&nbsp;<?php echo $loop['created_at']?></div>
              <div class="urls">
-                <form action="comment.php" method="GET">
-                    <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
-                    <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
-                    <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
-                    <input class="btn_s" type="submit" value="コメント欄">
-                </form>
+                 <div class="urls">
+                    <form action="yourpage.php" method="GET">
+                        <input type="hidden" name="num" value="<?php echo $num ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                        <button type="submit">戻る</button>
+                    </form>
+                     <form action="yourcomment.php" method="GET">
+                        <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
+                        <input type="hidden" name="num" value="<?php echo $num; ?>">
+                        <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
+                        <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
+                        <input class="btn-s" type="submit" value="コメント欄">
+                    </form>
+                </div>
              </div>
              <hr>
 		<?php endforeach;?>
-    </section>      
+    </section>
     <?php require "../../Layouts/footer.php" ?>
-    <script src="JS/home.js"></script>
+    <script src="JS/detail.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript">

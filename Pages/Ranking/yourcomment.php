@@ -9,7 +9,7 @@ function h($str){
 $id=h($_GET["id"]);
 $name=h($_GET["name"]);
 $filename=h($_GET["filename"]);
-$csrf_token=h($_GET["csrf_token"]);
+$num=h($_GET["num"]);
 $name = $_SESSION['user'];
 
 if (!empty($_GET["comment"])) {
@@ -61,7 +61,7 @@ $regist->execute();
                     <td class="first"><?php echo $loop['name']; ?></td>
                     <td class="second">&nbsp;<?php echo $loop['created_at']; ?></td>
                     <td class="third">
-                        <form action="comment-del.php" method="GET">
+                        <form action="yourcomment-del.php" method="GET">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="hidden" name="name" value="<?php echo $name; ?>">
                             <input type="hidden" name="comment" value="<?php echo $comment; ?>">
@@ -106,8 +106,8 @@ $regist->execute();
         }
         ?>
         <div class="urls">
-        <form action="detail.php" method="POST">
-            <input type="hidden" name="num" value="<?php echo $id ?>">
+        <form action="yourdetail.php" method="GET">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <input class="btn-s" type="submit" value="戻る">
         </form>
         </div>    

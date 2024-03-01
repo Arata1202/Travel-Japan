@@ -1,6 +1,7 @@
 <?php
 require "../../Security/all.php";
 require "../../Redirect/all.php";
+$num = $_SESSION['num'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -15,6 +16,7 @@ require "../../Redirect/all.php";
     <h2 class="subtitle">＊投稿の削除＊</h2>
     <p>一度削除したデータは復元できません。</p>
     <div class="urls">
+        <input class="btn_s" type="button" value="戻る" onclick="history.back(-1)">
         <form action="delete-2.php" method="GET">
             <input type="hidden" name = "delete" value = "<?php echo $num ?>">
             <input class="submit" type="submit" value="削除">

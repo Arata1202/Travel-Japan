@@ -42,6 +42,7 @@ require "../../Config/db.php";
             <p id="contentsError" class="error-message" style="color: red;"></p>
             <input type="hidden" name="img" value="<?php echo $loop['filename']?>">
             <div class="urls">
+                <input class="btn_s" type="button" value="戻る" onclick="history.back(-1)">
                 <button class="submit" type="submit">編集</button>
             </div>
             <?php endforeach;?>

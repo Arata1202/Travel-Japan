@@ -34,7 +34,7 @@ require "../../Config/db.php";
             <div class="spot">
                  <p class="name">
                  &nbsp;
-                    <form class="follow" action="rankyourpage.php" method="POST">
+                    <form class="follow" action="yourpage.php" method="GET">
                         <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                         <button class="btn_tr" type="submit"><?php echo $loop['name']; ?></button>
@@ -49,7 +49,7 @@ require "../../Config/db.php";
              <div class="iine">
                 <div class="many">&nbsp;いいね！ : <span id="like-count-<?php echo $loop['id']; ?>"><?php echo $loop['likes']?></span>件</div>
                 <div class="like_many">
-                    <form action="like.php" method="POST" class="like-form">
+                    <form action="like.php" method="GET" class="like-form">
                         <input type="hidden" name="post_id" value="<?php echo $loop['id']; ?>">
                         <button type="button" class="likeButton<?php if($loop['liked']) echo ' liked'; ?>" data-post-id="<?php echo $loop['id']; ?>">いいね！</button>
                     </form>

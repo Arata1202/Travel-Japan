@@ -51,7 +51,7 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
                      <p>&nbsp;<?php echo $loop['place']?>&nbsp;</p>
                  </div>
              </div>
-             <img src="../../images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
+             <img src="../../images/<?php echo $loop['filename']?>" loading="lazy" alt="" style="width:100%;">
              <div class="iine">
                  <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
                     <div class="like_many">
