@@ -1,7 +1,6 @@
 <?php
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 
 if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
     //

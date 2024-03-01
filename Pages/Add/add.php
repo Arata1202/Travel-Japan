@@ -1,7 +1,6 @@
 <?php
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -65,33 +64,41 @@ session_regenerate_id();
     <?php require "../../Layouts/header.php" ?>
     <h2 class="subtitle">＊新規投稿＊</h2>
     <div class="box">
-        <form action="add-2.php" method="post" enctype="multipart/form-data">
+        <form action="add-2.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
              <input type="hidden" name="name" value="<?php echo $_SESSION['user'] ?>" ><br>
              <h3>都道府県</h3>
-             <input type="text" name="prefecture" value="" placeholder="例 : 神奈川県" size="30" required style="height:25px;"><br>
+             <input type="text" id="prefecture" name="prefecture" value="" placeholder="例 : 神奈川県" size="30" style="height:25px;"><br>
+             <p id="prefectureError" class="error-message" style="color: red;"></p>
              <h3>観光地名称</h3>
-             <input type="text" name="place" value="" placeholder="例 : 箱根温泉" size="30" required style="height:25px;"><br>
+             <input type="text" id="spot" name="place" value="" placeholder="例 : 箱根温泉" size="30" style="height:25px;"><br>
+             <p id="spotError" class="error-message" style="color: red;"></p>
              <h3>コメント</h3>
-             <textarea name="contents" value="" placeholder="例 : 箱根温泉へ行きました。" rows="5" cols="30"></textarea><br>
+             <textarea name="contents" id="contents" value="" placeholder="例 : 箱根温泉へ行きました。" rows="5" cols="30"></textarea><br>
+             <p id="contentsError" class="error-message" style="color: red;"></p>
              <br>
-             <input type="file" name="upload_image" size="30" required style="height:25px;">
+             <input type="file" id="upload_image" name="upload_image" size="30" style="height:25px;">
+             <p id="upload_imageError" class="error-message" style="color: red;"></p>
              <br>
              <button class="submit" type="submit">投稿</button>
         </form>
      </div>              
      <?php require "../../Layouts/footer.php" ?>
+     <script src="../../Validation/add.js"></script>
      <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
      <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
      <script type="text/javascript">
-        $(document).ready(function(){
-            $('form').on('submit', function() {
+    $(document).ready(function(){
+        $('form').on('submit', function(event) {
+            if (validateForm()) {
                 $('.loader').show();
-            });
-            $(window).on('load', function() {
-                $('.loader').hide();
-            });
+                event.preventDefault();
+            }
         });
-    </script>
+        $(window).on('load', function() {
+            $('.loader').hide();
+        });
+    });
+</script>
     <script src="JS/add.js"></script>
 </body>
 </html>

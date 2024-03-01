@@ -1,8 +1,6 @@
 <?php
-//セキュリティー対策
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 
 $toke_byte = openssl_random_pseudo_bytes(30);
 $csrf_token = bin2hex($toke_byte);

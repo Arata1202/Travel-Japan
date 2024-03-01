@@ -1,10 +1,7 @@
 <?php
-//セキュリティー対策・セッション　＊
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,47 +11,34 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/content-2.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-
     <?php
-        
-        //エスケープ処理
         function h($str){
             return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
         }
-        $prefecture=h($_POST["prefecture"]);
-        $place=h($_POST["place"]);
-        $contents=h($_POST["contents"]);
-        $tag=h($_POST["tag"]);
-        $img=h($_POST["img"]);
-        $num=h($_POST["num"]);
-        $csrf_token=h($_POST["csrf_token"]);
+        $prefecture=h($_GET["prefecture"]);
+        $place=h($_GET["place"]);
+        $contents=h($_GET["contents"]);
+        $tag=h($_GET["tag"]);
+        $img=h($_GET["img"]);
+        $num=h($_GET["num"]);
     ?>
-
     <h2 class="subtitle">＊編集＊</h2>
-
-    <!--確認フォーム-->
-    <form action="content-3.php" method="POST">   
+    <form action="content-3.php" method="GET">   
         <p class="smalltitle">以下の内容で投稿します<br>宜しければ変更してください。</p>
         <div class="box">
             <p><img src="../../images/<?php echo $img ?>"></p>
-            
             <h3>都道府県</h3>
             <p><?php echo $prefecture ?><p>
             <input type="hidden" name="prefecture" value="<?php echo $prefecture ?>">
-            
             <h3>観光地名称</h3>
             <p><?php echo $place ?><p>
             <input type="hidden" name="place" value="<?php echo $place ?>">
-            
             <h3>コメント</h3>
             <p><?php echo $contents ?><p>
             <input type="hidden" name="contents" value="<?php echo $contents ?>">
-            
             <input type="hidden" name="num" value="<?php echo $num ?>">
         </div>
-
         <div class="flex_box">
             <input class="btn_s" type="button" value="内容を修正する" onclick="history.back(-1)">
             <button class="submit" type="submit" name="add">変更</button>
@@ -65,9 +49,7 @@ session_regenerate_id();
         <input type="hidden" name="id" value="<?php echo $id;?>">
         <input type="hidden" name="tel" value="<?php echo $tel;?>">
     </form>
-
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/content-2.js"></script>
 </body>
 </html>

@@ -1,21 +1,15 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
 
-//セキュリティー対策
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
-
-//MySQL接続
 $dbh=new PDO($dsn,$user,$password);
 $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
 $sql='SELECT * FROM japantravel order by likes DESC limit 10';
 $rec = $dbh->prepare($sql);
 $rec->execute();
 $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -25,14 +19,9 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="CSS/ranking.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-
     <h2 class="subtitle">＊ランキング＊<br><br></h2>
-
-    <!--投稿内容の表示-->
-    <section class="box">
-        
+    <section class="box">    
         <?php foreach($rec_list as $loop):
         $pic_num =  $loop['id'];
         ?>
@@ -42,8 +31,7 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <td width="42%"><img src="../../images/<?php echo $loop['filename']?>" alt="" width="100%"></td>
                 <td width="40%"><?php echo $loop['name']?><br><?php echo $loop['prefecture']?><br><?php echo $loop['place']?><br><?php echo $loop['created_at']?></td>
-            
-            <form action="detail.php" method="POST">
+            <form action="detail.php" method="GET">
                 <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                 <td width="18%"><input class="submit" type="submit" name="submit" value="詳細"></td>
             </form>
@@ -52,8 +40,6 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
         <hr>
         <?php endforeach;?>
     </section>
-
-    <!--投稿内容の表示-->
     <section class="pcbox">
 		<p><?php foreach($rec_list as $loop):?></p>
             <h2><?php $suuji = $suuji + 1; echo $suuji; ?>位</h2>
@@ -66,13 +52,9 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
                  </div>
              </div>
              <img src="../../images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
-             
-             <!--いいね機能-->
              <div class="iine">
                  <div class="many">&nbsp;いいね！ : <?php echo $loop['likes']?>件</div>
                     <div class="like_many">
-
-                        <!--いいね機能　フォーム-->
                         <form action="like.php" method="POST" name="like_btn">
                             <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                             <input class="submit" type="submit" value="いいね！">
@@ -81,10 +63,8 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
                  </div>
              <div class="message">&nbsp;<?php echo $loop['contents']?></div>
              <div class="contents">&nbsp;<?php echo $loop['created_at']?></div>
-             
-             <!--詳細ボタン-->
              <div class="urls">
-                 <form action="detail.php" method="POST">
+                 <form action="detail.php" method="GET">
                     <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                     <td width="18%"><input class="btn_t" type="submit" name="submit" value="詳細"></td>
                 </form>
@@ -92,9 +72,7 @@ $rec_list = $rec->fetchAll(PDO::FETCH_ASSOC);
              <hr>
 		<?php endforeach;?>
     </section>
-
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/ranking.js"></script>
 </body>
 </html>

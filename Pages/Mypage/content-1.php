@@ -1,13 +1,7 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
-
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
-
-$toke_byte = openssl_random_pseudo_bytes(16);
-$csrf_token = bin2hex($toke_byte);
-$_SESSION['csrf_token'] = $csrf_token;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -32,17 +26,20 @@ $_SESSION['csrf_token'] = $csrf_token;
     }
     ?>
     <div class="box">
-        <form action="content-2.php" method="POST">
+        <form action="content-2.php" method="GET" onsubmit="return validateForm();">
             <!--投稿番号-->
             <input type="hidden" name="num" value="<?php echo $num ?>">
             <?php foreach($stmt as $loop):?>
             <p><img src="../../images/<?php echo $loop['filename'];?>"></p>
             <h3>都道府県</h3>
-            <p><input type="text" name="prefecture" value="<?php echo $loop['prefecture']?>" required size="30" style="height:25px;"></p>
+            <p><input type="text" id="prefecture" name="prefecture" value="<?php echo $loop['prefecture']?>" size="30" style="height:25px;"></p>
+            <p id="prefectureError" class="error-message" style="color: red;"></p>
             <h3>観光地名称</h3>
-            <p><input type="text" name="place" value="<?php echo $loop['place']?>" required size="30" style="height:25px;"></p>
+            <p id="spotError" class="error-message" style="color: red;"></p>
+            <p><input type="text" id="spot" name="place" value="<?php echo $loop['place']?>" size="30" style="height:25px;"></p>
             <h3>コメント</h3>
-            <p><textarea name="contents" rows="5" cols="30"><?php echo $loop['contents']?></textarea></p>
+            <p><textarea name="contents" id="contents" rows="5" cols="30"><?php echo $loop['contents']?></textarea></p>
+            <p id="contentsError" class="error-message" style="color: red;"></p>
             <input type="hidden" name="img" value="<?php echo $loop['filename']?>">
             <div class="urls">
                 <button class="submit" type="submit">編集</button>
@@ -51,6 +48,7 @@ $_SESSION['csrf_token'] = $csrf_token;
         </form>
     </div>
     <?php require "../../Layouts/footer.php" ?>
+    <script src="../../Validation/contents.js"></script>
     <script src="JS/content-1.js"></script>
 </body>
 </html>

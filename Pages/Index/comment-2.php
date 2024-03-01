@@ -1,9 +1,7 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
-
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
 
 function h($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');

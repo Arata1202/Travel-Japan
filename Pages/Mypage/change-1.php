@@ -1,10 +1,7 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
-
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
-$session_user = $_SESSION['user'];
 
 $toke_byte = openssl_random_pseudo_bytes(30);
 $csrf_token = bin2hex($toke_byte);

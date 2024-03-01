@@ -1,9 +1,8 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
 
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
 $sessionid = $_SESSION['user'];
 
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));

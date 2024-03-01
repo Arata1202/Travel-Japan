@@ -1,12 +1,8 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
-
-//セキュリティー対策・セッション　＊
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,36 +12,28 @@ session_regenerate_id();
     <link rel="stylesheet" href="CSS/detail.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-
     <h2 class="subtitle">＊詳細＊</h2>
-
     <?php
-    //エスケープ処理
     function h($str){
         return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
     }
-    $_SESSION['num'] = $_POST['num'];
+    $_SESSION['num'] = $_GET['num'];
     $num = $_SESSION['num'] ;
 
-    if (isset($_POST["num"])) {
+    if (isset($_GET["num"])) {
         $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
         $stmt = $pdo->prepare("SELECT * FROM japantravel WHERE id = '$num'");
         $stmt->execute();
     } else {    
         echo "error";
     }
-    ?>
-        
-    <!--投稿内容の表示-->
+    ?> 
     <section class="box">
 		<?php foreach($stmt as $loop):?>
             <div class="spot">
                  <p class="name">
                  &nbsp;
-                 
-                    <!--　フォローページ　-->
                     <form class="follow" action="rankyourpage.php" method="POST">
                         <input type="hidden" name="num" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
@@ -58,7 +46,6 @@ session_regenerate_id();
                  </div>
              </div>
              <img src="../../images/<?php echo $loop['filename']?>" alt="" style="width:100%;">
-             
              <div class="iine">
                 <div class="many">&nbsp;いいね！ : <span id="like-count-<?php echo $loop['id']; ?>"><?php echo $loop['likes']?></span>件</div>
                 <div class="like_many">
@@ -73,7 +60,7 @@ session_regenerate_id();
              <div class="urls">
                  <div class="urls">
                      <button onclick="location.href='ranking.php'">戻る</button>
-                    <form action="comment.php" method="POST">
+                    <form action="comment.php" method="GET">
                         <input type="hidden" name="id" value="<?php echo $loop['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $loop['name']; ?>">
                         <input type="hidden" name="filename" value="<?php echo $loop['filename']; ?>">
@@ -84,12 +71,8 @@ session_regenerate_id();
              <hr>
 		<?php endforeach;?>
     </section>
-
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/detail.js"></script>
-
-    <!--     jQuery     -->
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript">
@@ -99,25 +82,19 @@ session_regenerate_id();
                 var post_id = button.data('post-id');
                 var liked = button.hasClass('liked');
                 var likeCount = $('#like-count-' + post_id);
-                
-                // いいねの状態を切り替える
                 button.toggleClass('liked');
                 var likeState = button.hasClass('liked') ? 1 : 0;
-
-                // いいねのデータをサーバーに送信
                 $.ajax({
                     type: 'POST',
                     url: 'like.php',
                     data: {post_id: post_id, like: likeState},
                     success: function(response){
-                        // 成功したら、いいねの数を更新
                         var data = JSON.parse(response);
                         if(data.success) {
                             likeCount.text(data.likes);
                         }
                     },
                     error: function(){
-                        // エラーが発生した場合は、ボタンのスタイルを元に戻す
                         button.toggleClass('liked', liked);
                     }
                 });

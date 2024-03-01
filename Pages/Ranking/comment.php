@@ -1,25 +1,18 @@
 <?php
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
 
-//セキュリティー対策・セッション　＊
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
-
-//エスケープ処理
 function h($str){
     return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
-
-//変数定義
-$id=h($_POST["id"]);
-$name=h($_POST["name"]);
-$filename=h($_POST["filename"]);
+$id=h($_GET["id"]);
+$name=h($_GET["name"]);
+$filename=h($_GET["filename"]);
 $name = $_SESSION['user'];
 
-// コメントの投稿処理
-if (!empty($_POST["comment"])) { // 修正: $_POST["comment"]が空でない場合のみ処理を行う
-    $comment = h($_POST["comment"]); // 修正: $comment変数を定義
+if (!empty($_GET["comment"])) { 
+    $comment = h($_GET["comment"]); 
     try {
         $dbh = new PDO($dsn, $user, $password);
         $stmt = $dbh->prepare("INSERT INTO comment(id, name, comment, created_at) VALUES (:id, :name, :comment, NOW())");
@@ -28,22 +21,18 @@ if (!empty($_POST["comment"])) { // 修正: $_POST["comment"]が空でない場�
         $stmt->bindParam(':comment', $comment);
         $stmt->execute();
     } catch (PDOException $e) {
-        // エラー処理
         echo "エラーが発生しました：" . $e->getMessage();
     }
 }
 
-//SQL接続　自分のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $stmt = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' && name = '$name' order by created_at DESC limit 50");
 $stmt->execute();
 
-//SQL接続　全体のコメント
 $pdo = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $regist = $pdo->prepare("SELECT * FROM comment WHERE id = '$id' order by created_at DESC limit 50");
 $regist->execute();
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -53,24 +42,17 @@ $regist->execute();
     <link rel="stylesheet" href="CSS/comment.css">
 </head>
 <body>
-    
     <?php require "../../Layouts/header.php" ?>
-    
         <div class="box">
-            <!--サブタイトル-->
             <h2 class="subtitle">＊コメント＊</h2>
             <img src="../../images/<?php echo $filename?>" alt="" style="width:100%;">
-            
-            <!-- コメント用フォーム -->
             <h3>コメントする</h3>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="filename" value="<?php echo $filename; ?>">
                 <input type="text" name="comment" value="" required size="30" style="height:25px;">
                 <input class="submit" type="submit" value="投稿">
             </form>
-    
-            <!--あなたの投稿　表示-->
             <h3>あなたのコメント</h3>
             <?php foreach ($stmt as $loop): ?>
                 <?php $comment = $loop['comment']; ?>
@@ -79,12 +61,8 @@ $regist->execute();
                         <td class="first"><?php echo $loop['name']; ?></td>
                         <td class="second">&nbsp;<?php echo $loop['created_at']; ?></td>
                         <td class="third">
-    
-                            <!--削除フォーム-->
-                            <form action="comment-del.php" method="post">
-                                <!--トークンの送信-->
+                            <form action="comment-del.php" method="GET">
                                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
-    
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="name" value="<?php echo $name; ?>">
                                 <input type="hidden" name="comment" value="<?php echo $comment; ?>">
@@ -106,8 +84,6 @@ $regist->execute();
                 echo "<hr>";
             }
             ?>
-    
-            <!--みんなの投稿　表示-->
             <h3>みんなのコメント</h3>       
             <?php foreach ($regist as $loop): ?>
                 <?php $comment_s = $loop['comment']; ?>
@@ -130,18 +106,14 @@ $regist->execute();
                 echo "<hr>";
             }
             ?>
-    
-            <!--ボタン-->
             <div class="urls">
-            <form action="detail.php" method="POST">
+            <form action="detail.php" method="GET">
                 <input type="hidden" name="num" value="<?php echo $id ?>">
                 <input class="btn-s" type="submit" value="戻る">
             </form>
             </div>    
         </div>
-            
     <?php require "../../Layouts/footer.php" ?>
-
     <script src="JS/comment.js"></script>
 </body>
 </html>

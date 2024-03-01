@@ -1,7 +1,6 @@
 <?php
-session_start();
-session_regenerate_id();
-
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 require "../../Config/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

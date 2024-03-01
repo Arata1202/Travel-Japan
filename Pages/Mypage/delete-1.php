@@ -1,8 +1,6 @@
 <?php
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
-$num = $_SESSION['num'];
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 ?>
 <!DOCTYPE html>
 <html lang="ja">

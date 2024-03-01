@@ -1,9 +1,8 @@
 <?php
-require "../../Config/db.php";
+require "../../Security/all.php";
+require "../../Redirect/all.php";
 
-header('X-Frame-Options: SAMEORIGIN');
-session_start();
-session_regenerate_id();
+require "../../Config/db.php";
 
 if (!empty($_FILES)) {
     $filename = $_FILES['upload_image']['name'];
